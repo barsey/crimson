@@ -1,0 +1,33 @@
+.container {
+  background: linear-gradient(250deg, #7b2ff7, #f107a3);
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 48px;
+  height: 24px;
+  border-radius: 12px;
+}
+
+.switch {
+  width: 48px;
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.4);
+  display: flex;
+  justify-content: flex-start;
+  border-radius: 10px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.switch[data-isOn='true'] {
+  justify-content: flex-end;
+}
+
+.handle {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 10px;
+}
