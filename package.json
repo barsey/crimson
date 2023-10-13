@@ -1,7 +1,7 @@
 {
-  "name": "crimson",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@ynetic/particle",
+  "version": "0.0.1",
+  "description": "A ReactJs component library",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
@@ -16,7 +16,11 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
-  "author": "",
+  "author": "Barun Prasad",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ynetic/particle"
+  },
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.23.2",
