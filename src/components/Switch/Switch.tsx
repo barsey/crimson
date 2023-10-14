@@ -55,7 +55,7 @@ type Props = {
   size?: SwitchSize;
 };
 
-export default function Switch({ label, size }: Props) {
+function Switch({ label, size }: Props) {
   const [isOn, setIsOn] = useState(false);
 
   const toggleSwitch = () => setIsOn(!isOn);
@@ -86,3 +86,5 @@ const spring = {
   stiffness: 700,
   damping: 30,
 };
+
+export { Switch };

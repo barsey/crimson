@@ -5,6 +5,7 @@ import dts from 'rollup-plugin-dts';
 import { terser } from 'rollup-plugin-terser';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import { babel } from '@rollup/plugin-babel';
+import bundleSize from 'rollup-plugin-bundle-size';
 import { createRequire } from 'node:module';
 const requireFile = createRequire(import.meta.url);
 const packageJson = requireFile('./package.json');
@@ -16,16 +17,18 @@ export default [
       {
         file: packageJson.main,
         format: 'cjs',
-        sourcemap: true,
+        exports: 'named',
+        // sourcemap: true,
       },
       {
         file: packageJson.module,
         format: 'esm',
         exports: 'named',
-        sourcemap: true,
+        // sourcemap: true,
       },
     ],
     plugins: [
+      bundleSize(),
       peerDepsExternal(),
       resolve({
         extensions: ['.ts', '.tsx'],
@@ -45,6 +48,7 @@ export default [
         babelHelpers: 'runtime',
         extensions: ['.ts', '.tsx'],
         exclude: 'node_modules/**',
+        // sourceMaps: false,
       }),
     ],
     external: [
