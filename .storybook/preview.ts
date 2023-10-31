@@ -1,15 +1,30 @@
 import type { Preview } from '@storybook/react';
+import { withThemeFromJSXProvider } from '@storybook/addon-themes';
+import { ThemeProvider } from '@emotion/react';
 
-const preview: Preview = {
-  parameters: {
-    actions: { argTypesRegex: '^on[A-Z].*' },
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/,
-      },
+import { lightTheme } from '../src/theming/theme';
+
+export const decorators = [
+  withThemeFromJSXProvider({
+    themes: {
+      light: lightTheme,
     },
-  },
-};
+    defaultTheme: 'light',
+    Provider: ThemeProvider,
+  }),
+];
 
-export default preview;
+// const preview: Preview = {
+//   parameters: {
+//     actions: { argTypesRegex: '^on[A-Z].*' },
+//     controls: {
+//       matchers: {
+//         color: /(background|color)$/i,
+//         date: /Date$/,
+//       },
+//     },
+//   },
+//   decorators
+// };
+
+// export default preview;

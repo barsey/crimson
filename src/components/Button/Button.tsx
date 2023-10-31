@@ -1,20 +1,19 @@
-import React, { MouseEventHandler } from 'react';
+import React, { MouseEventHandler, PropsWithChildren } from 'react';
 import styled from '@emotion/styled';
-// import { ButtonProps } from "./Button.types";
+import { motion } from 'framer-motion';
 
 interface ButtonProps {
-  text?: string;
   primary?: boolean;
   disabled?: boolean;
   size?: 'small' | 'medium' | 'large';
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
-const StyledButton = styled.button<ButtonProps>`
+const StyledButton = styled(motion.button)<ButtonProps>`
   border: 0;
   line-height: 1;
   font-size: 15px;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
   font-weight: 700;
   font-weight: bold;
   border-radius: 3px;
@@ -25,12 +24,10 @@ const StyledButton = styled.button<ButtonProps>`
       : props.size === 'medium'
       ? '9px 30px 11px'
       : '14px 30px 16px'};
-  color: ${(props) => (props.primary ? '#1b116e' : '#ffffff')};
-  background-color: ${(props) => (props.primary ? '#6bedb5' : '#1b116e')};
+  color: #ffffff;
+  background: ${({ theme }) =>
+    `linear-gradient(250deg, ${theme.colors.primary}, ${theme.colors.secondary})`};
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
-  &:hover {
-    background-color: ${(props) => (props.primary ? '#55bd90' : '#6bedb5')};
-  }
   &:active {
     border: solid 2px #1b116e;
     padding: ${(props) =>
@@ -42,11 +39,11 @@ const StyledButton = styled.button<ButtonProps>`
   }
 `;
 
-const Button: React.FC<ButtonProps> = ({
+const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
   size,
   primary,
   disabled,
-  text,
+  children,
   onClick,
   ...props
 }) => {
@@ -57,11 +54,20 @@ const Button: React.FC<ButtonProps> = ({
       primary={primary}
       disabled={disabled}
       size={size}
+      whileHover={
+        !disabled
+          ? {
+              scale: 1.1,
+              boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
+            }
+          : {}
+      }
+      transition={{ type: 'spring', stiffness: 400, damping: 10 }}
       {...props}
     >
-      {text}
+      {children}
     </StyledButton>
   );
 };
 
-export default Button;
+export { Button };

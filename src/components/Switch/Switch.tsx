@@ -16,12 +16,16 @@ const Container = styled.div`
   align-items: center;
 `;
 
+// `linear-gradient(250deg, #7b2ff7, #f107a3)` : '#949a9d'};
+
 const MotionSwitchContainer = styled(motion.div)<{
   isOn: boolean;
   height: number;
 }>`
-  background: ${({ isOn }) =>
-    isOn ? 'linear-gradient(250deg, #7b2ff7, #f107a3)' : '#949a9d'};
+  background: ${({ isOn, theme }) =>
+    isOn
+      ? `linear-gradient(250deg, ${theme.colors.primary}, ${theme.colors.secondary})`
+      : '#949a9d'};
   background-repeat: no-repeat;
   display: flex;
   justify-content: center;
