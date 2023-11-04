@@ -19,11 +19,3 @@ jobs:
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
-          
-      #👇 Adds Chromatic as a step in the workflow
-      - uses: chromaui/action@v1
-        # Options required for Chromatic's GitHub Action
-        with:
-          #👇 Chromatic projectToken,
-          projectToken: ${{ secrets.CHROMATIC_PARTICLE_TOKEN }}
-          token: ${{ secrets.GITHUB_TOKEN }}
