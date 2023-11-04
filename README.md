@@ -24,4 +24,4 @@ Run <code>yarn storybook</code> to see the components using storybook.
 
 ## yarn build-storybook
 
-Run <code>yarn build-storybook</code> to see generate a static website code.
+Run <code>yarn build-storybook</code> to generate a static website for storybook.
