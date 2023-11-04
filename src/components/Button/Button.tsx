@@ -1,11 +1,9 @@
 import React, { MouseEventHandler, PropsWithChildren } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-
-interface ButtonProps {
-  primary?: boolean;
+import { DefaultParticleProps } from '../types';
+interface ButtonProps extends DefaultParticleProps {
   disabled?: boolean;
-  size?: 'small' | 'medium' | 'large';
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -24,9 +22,12 @@ const StyledButton = styled(motion.button)<ButtonProps>`
       : props.size === 'medium'
       ? '9px 30px 11px'
       : '14px 30px 16px'};
-  color: #ffffff;
-  background: ${({ theme }) =>
-    `linear-gradient(250deg, ${theme.colors.primary}, ${theme.colors.secondary})`};
+  color: ${({ theme, color }) =>
+    color ? theme.getContrastText(theme.colors[color]) : '#ffffff'};
+  background: ${({ theme, color }) =>
+    color
+      ? theme.colors[color]
+      : `linear-gradient(250deg, ${theme.colors.primary}, ${theme.colors.secondary})`};
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
   &:active {
     border: solid 2px #1b116e;
@@ -41,19 +42,19 @@ const StyledButton = styled(motion.button)<ButtonProps>`
 
 const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
   size,
-  primary,
   disabled,
   children,
   onClick,
+  color,
   ...props
 }) => {
   return (
     <StyledButton
       type='button'
       onClick={onClick}
-      primary={primary}
       disabled={disabled}
       size={size}
+      color={color}
       whileHover={
         !disabled
           ? {

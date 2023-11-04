@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import styled from '@emotion/styled';
 import React from 'react';
+import { DefaultParticleProps, ParticleColor } from '../types';
 
 const DefaultSize = 24;
 const SwitchSizeMap = {
@@ -16,15 +16,16 @@ const Container = styled.div`
   align-items: center;
 `;
 
-// `linear-gradient(250deg, #7b2ff7, #f107a3)` : '#949a9d'};
-
 const MotionSwitchContainer = styled(motion.div)<{
   isOn: boolean;
   height: number;
+  color?: ParticleColor;
 }>`
-  background: ${({ isOn, theme }) =>
+  background: ${({ isOn, theme, color }) =>
     isOn
-      ? `linear-gradient(250deg, ${theme.colors.primary}, ${theme.colors.secondary})`
+      ? color
+        ? theme.colors[color]
+        : `linear-gradient(250deg, ${theme.colors.primary}, ${theme.colors.secondary})`
       : '#949a9d'};
   background-repeat: no-repeat;
   display: flex;
@@ -53,30 +54,28 @@ const MotionHandleElement = styled(motion.div)<{ height: number }>`
   background-color: white;
   border-radius: ${({ height }) => (height - 4) / 2}px;
 `;
-type SwitchSize = 'small' | 'medium' | 'large';
-type Props = {
+
+type Props = DefaultParticleProps & {
   label?: string;
-  size?: SwitchSize;
+  checked?: boolean;
+  onToggle?: () => void;
 };
 
-function Switch({ label, size }: Props) {
-  const [isOn, setIsOn] = useState(false);
-
-  const toggleSwitch = () => setIsOn(!isOn);
-
+function Switch({ label, size, color, checked = false, onToggle }: Props) {
   const height = size ? SwitchSizeMap[size] : DefaultSize;
 
   return (
     <Container>
       <MotionSwitchContainer
-        isOn={isOn}
+        isOn={checked}
         height={height}
+        color={color}
         whileHover={{
           scale: 1.1,
           boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
         }}
       >
-        <SwitchElement isOn={isOn} onClick={toggleSwitch}>
+        <SwitchElement isOn={checked} onClick={onToggle}>
           <MotionHandleElement height={height} layout transition={spring} />
         </SwitchElement>
       </MotionSwitchContainer>

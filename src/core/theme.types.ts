@@ -1,4 +1,4 @@
-export interface ParticleTheme {
+export interface ParticleColorTheme {
   colors: {
     primary: string;
     secondary: string;
@@ -7,4 +7,7 @@ export interface ParticleTheme {
     warning: string;
     error: string;
   };
+}
+export interface ParticleTheme extends ParticleColorTheme {
+  getContrastText: Function;
 }
