@@ -10,9 +10,7 @@
   This package is built using ReactJs, Typescript, Vite, Rollup, Framer Motion, Emotion and Storybook
 </h2>
 
-<h3 align="center">
-  You can access the component design system <a src="https://ynetic.github.io/particle/" alt="storybook-components">here</a>
-</h3>
+## You can access the component design system [here](https://ynetic.github.io/particle)
 
 # Available Scripts
 
