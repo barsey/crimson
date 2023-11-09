@@ -27,3 +27,7 @@ Run <code>yarn storybook</code> to see the components using storybook.
 ## yarn build-storybook
 
 Run <code>yarn build-storybook</code> to see generate a static website code.
+
+## Commit Messages
+
+Follows the [conventional commit specifications](https://www.conventionalcommits.org/en/v1.0.0/#summary)
