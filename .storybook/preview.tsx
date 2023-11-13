@@ -1,6 +1,7 @@
 import React from 'react';
 import { Preview } from '@storybook/react';
 import ParticleProvider from '../src/core/ParticleProvider';
+import './style.css';
 
 // export const decorators = [
 //   withThemeFromJSXProvider({
