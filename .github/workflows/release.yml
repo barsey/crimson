@@ -13,12 +13,22 @@ env:
 jobs:
   release:
     runs-on: ubuntu-latest
+    concurrency: release
 
     steps:
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.MYBOT_APP_ID }}
+          private_key: ${{ secrets.MYBOT_PRIVATE_KEY }}
+
       - name: Checkout 🛎️
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.BUILD_SVC_PAT }}
+          fetch-depth: 0
+          # token: ${{ secrets.BUILD_SVC_PAT }}
+          token: ${{ steps.generate_token.outputs.token }}
           ref: main
 
       - name: Setup Node.js
