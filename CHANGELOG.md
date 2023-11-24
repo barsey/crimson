@@ -1,3 +1,10 @@
+## [0.1.1](https://github.com/ynetic/particle/compare/v0.1.0...v0.1.1) (2023-11-24)
+
+
+### Bug Fixes
+
+* add @semantic-release/github ([f8ef465](https://github.com/ynetic/particle/commit/f8ef4656466f5495521d4978faa3ce3e237396d3))
+
 # [0.1.0](https://github.com/ynetic/particle/compare/v0.0.9...v0.1.0) (2023-11-24)
 
 
