@@ -7,6 +7,9 @@ on:
 permissions:
   contents: write
 
+env:
+  HUSKY: 0 # don't run husky hooks like commit-lint
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -25,6 +28,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.18.0
+          cache: yarn
+          cache-dependency-path: ./yarn.lock
           registry-url: https://registry.npmjs.org/
 
       - name: Install Dependencies
