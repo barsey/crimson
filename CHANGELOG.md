@@ -1,3 +1,10 @@
+## [0.1.2](https://github.com/ynetic/particle/compare/v0.1.1...v0.1.2) (2023-11-24)
+
+
+### Bug Fixes
+
+* update the assets path for github releases ([5558d69](https://github.com/ynetic/particle/commit/5558d6955400566c4fc17e22bff3d1132e22348e))
+
 ## [0.1.1](https://github.com/ynetic/particle/compare/v0.1.0...v0.1.1) (2023-11-24)
 
 
