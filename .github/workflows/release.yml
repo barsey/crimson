@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.BUILD_SVC_PAT }}
+          ref: main
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.18.0
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Bundle build for publish
+        run: yarn build
+
+      - name: Build storybook
+        run: yarn build-storybook
+
+      - name: Deploy Storybook 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: storybook-static # output folder from `yarn build-storybook`
+
+      - name: Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
+        run: npx semantic-release
