@@ -7,7 +7,7 @@
 </h1>
 
 <h2 align="center">
-  This package is built using ReactJs, Typescript, Vite, Rollup, Framer Motion, Emotion and Storybook
+  This package is built using ReactJs, Typescript, Vite, Rollup, Framer Motion, Emotion and Storybook.
 </h2>
 
 ## You can access the component design system [here](https://ynetic.github.io/particle)
