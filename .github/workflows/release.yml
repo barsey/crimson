@@ -13,7 +13,6 @@ env:
 jobs:
   release:
     runs-on: ubuntu-latest
-    concurrency: release
 
     steps:
       - name: Checkout 🛎️
