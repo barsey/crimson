@@ -1,3 +1,10 @@
+## [0.1.3](https://github.com/ynetic/particle/compare/v0.1.2...v0.1.3) (2023-11-24)
+
+
+### Bug Fixes
+
+* **release:** update the plugins for release file ([dab34e2](https://github.com/ynetic/particle/commit/dab34e2cf3ee80fac90dfed18f62fb9b5c2cfba8))
+
 ## [0.1.2](https://github.com/ynetic/particle/compare/v0.1.1...v0.1.2) (2023-11-24)
 
 
