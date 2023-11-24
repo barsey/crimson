@@ -1,0 +1,43 @@
+import { Meta, Source } from '@storybook/blocks';
+import InstallationSteps from './InstallationSteps';
+
+    <Meta title='Getting Started' />
+
+# Getting started
+
+Use Particle components based on the following steps
+
+## 1. Install
+
+To use Particle in your project, run one of the following commands in your terminal
+
+    <InstallationSteps yarnStep={<Source
+          dark
+          code={`
+
+yarn add @ynetic/particle @emotion/react @emotion/styled framer-motion`}
+/>} npmStep={<Source
+          dark
+          code={`
+
+npm install @ynetic/particle @emotion/react @emotion/styled framer-motion`}
+/>} />
+
+## 2. Configure your project
+
+    <Source
+          dark
+          language="tsx"
+          code={`
+
+// 1. import ParticleProvider component
+import { ParticleProvider } from '@ynetic/particle';
+
+export function App() {
+  // 2. Wrap ParticleProvider at the root of your app
+  return (
+    <ParticleProvider>
+      <RestOfYourCode />
+    </ParticleProvider>
+  );
+}`} />

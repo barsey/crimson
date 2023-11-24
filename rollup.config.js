@@ -56,6 +56,7 @@ export default [
       'react-dom',
       '@emotion/react',
       '@emotion/styled',
+      'framer-motion',
       /@babel\/runtime/,
     ],
   },
