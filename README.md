@@ -14,6 +14,7 @@
 [![NPM](https://img.shields.io/npm/v/@ynetic/particle.svg)](https://www.npmjs.com/package/@ynetic/particle)
 [![semantic-release](https://img.shields.io/badge/semantic--release-angular?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 [![storybook](https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg)](https://ynetic.github.io/particle/)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 ## Links
 
@@ -30,6 +31,7 @@
 - [`framer-motion`](https://www.framer.com/motion/) – A motion library for React
 - [`@storybook`](https://storybook.js.org/) – For building the components in isolation and for documentation
 - [`semantic-release`](https://semantic-release.gitbook.io/) – Automates the whole package release workflow
+- [`prettier`](https://prettier.io/) – code formatter
 
 # Available Scripts
 
