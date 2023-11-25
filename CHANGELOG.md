@@ -1,3 +1,10 @@
+## [0.1.6](https://github.com/ynetic/particle/compare/v0.1.5...v0.1.6) (2023-11-25)
+
+
+### Bug Fixes
+
+* remove unwanted packages and update readme ([59a0e81](https://github.com/ynetic/particle/commit/59a0e81c68b2e4edf6b706c8933f35552ec388f6))
+
 ## [0.1.5](https://github.com/ynetic/particle/compare/v0.1.4...v0.1.5) (2023-11-25)
 
 
