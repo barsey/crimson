@@ -12,6 +12,8 @@
 [![NPM License](https://img.shields.io/npm/l/@ynetic/particle)](https://github.com/ynetic/particle/blob/main/LICENSE)
 [![GitHub contributors](https://img.shields.io/github/contributors/ynetic/particle)](https://github.com/ynetic/particle/graphs/contributors)
 [![NPM](https://img.shields.io/npm/v/@ynetic/particle.svg)](https://www.npmjs.com/package/@ynetic/particle)
+[![semantic-release](https://img.shields.io/badge/semantic--release-angular?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+[![storybook](https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg)](https://ynetic.github.io/particle/)
 
 ## Links
 
@@ -21,12 +23,13 @@
 ## Packages used
 
 - [`react`](https://react.dev/) – ReactJs
-- [`typescript`](https://www.typescriptlang.org/) – Typescript
-- [`vite`](https://vitejs.dev/) – Vite
-- [`rollup`](https://rollupjs.org/) – Rollup
-- [`@emotion/styled`](https://emotion.sh/) – EmotionJs
-- [`framer-motion`](https://www.framer.com/motion/) – Framer Motion
-- [`@storybook`](https://storybook.js.org/) – Storybook
+- [`typescript`](https://www.typescriptlang.org/) – For type safety
+- [`vite`](https://vitejs.dev/) – Provides the frontend tooling
+- [`rollup`](https://rollupjs.org/) – The JavaScript module bundler
+- [`@emotion/styled`](https://emotion.sh/) – For writing css styles with JavaScript
+- [`framer-motion`](https://www.framer.com/motion/) – A motion library for React
+- [`@storybook`](https://storybook.js.org/) – For building the components in isolation and for documentation
+- [`semantic-release`](https://semantic-release.gitbook.io/) – Automates the whole package release workflow
 
 # Available Scripts
 
