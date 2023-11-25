@@ -6,11 +6,27 @@
   Ynetic Particle component design system
 </h1>
 
-<h2 align="center">
-  This package is built using ReactJs, Typescript, Vite, Rollup, Framer Motion, Emotion and Storybook.
-</h2>
+# Particle
 
-## You can access the component design system [here](https://ynetic.github.io/particle)
+![Build Status](https://github.com/ynetic/particle/actions/workflows/release.yml/badge.svg)
+[![NPM License](https://img.shields.io/npm/l/@ynetic/particle)](https://github.com/ynetic/particle/blob/main/LICENSE)
+[![GitHub contributors](https://img.shields.io/github/contributors/ynetic/particle)](https://github.com/ynetic/particle/graphs/contributors)
+[![NPM](https://img.shields.io/npm/v/@ynetic/particle.svg)](https://www.npmjs.com/package/@ynetic/particle)
+
+## Links
+
+- [Documentation](https://ynetic.github.io/particle/)
+- [Changelog](https://github.com/ynetic/particle/blob/main/CHANGELOG.md)
+
+## Packages used
+
+- [`react`](https://react.dev/) – ReactJs
+- [`typescript`](https://www.typescriptlang.org/) – Typescript
+- [`vite`](https://vitejs.dev/) – Vite
+- [`rollup`](https://rollupjs.org/) – Rollup
+- [`@emotion/styled`](https://emotion.sh/) – EmotionJs
+- [`framer-motion`](https://www.framer.com/motion/) – Framer Motion
+- [`@storybook`](https://storybook.js.org/) – Storybook
 
 # Available Scripts
 
@@ -22,7 +38,7 @@ Run <code>yarn build</code> to build the package.
 
 ## yarn storybook
 
-Run <code>yarn storybook</code> to see the components using storybook.
+Run <code>yarn storybook</code> to develop components in isolation using storybook.
 
 ## yarn build-storybook
 
@@ -31,3 +47,13 @@ Run <code>yarn build-storybook</code> to see generate a static website code.
 ## Commit Messages
 
 Follows the [conventional commit specifications](https://www.conventionalcommits.org/en/v1.0.0/#summary)
+
+## Contributors
+
+<a href="https://github.com/ynetic/particle/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=ynetic/particle" />
+</a>
+
+## License
+
+MIT
