@@ -12,8 +12,8 @@
 [![NPM License](https://img.shields.io/npm/l/@ynetic/particle)](https://github.com/ynetic/particle/blob/main/LICENSE)
 [![GitHub contributors](https://img.shields.io/github/contributors/ynetic/particle)](https://github.com/ynetic/particle/graphs/contributors)
 [![NPM](https://img.shields.io/npm/v/@ynetic/particle.svg)](https://www.npmjs.com/package/@ynetic/particle)
-[![semantic-release](https://img.shields.io/badge/semantic--release-angular?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 [![storybook](https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg)](https://ynetic.github.io/particle/)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 ## Links
