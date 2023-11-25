@@ -1,3 +1,10 @@
+## [0.1.7](https://github.com/ynetic/particle/compare/v0.1.6...v0.1.7) (2023-11-25)
+
+
+### Bug Fixes
+
+* **docs:** update semantic release badge ([25794fe](https://github.com/ynetic/particle/commit/25794fe16987453fbc498697ced6a1a2d79271cf))
+
 ## [0.1.6](https://github.com/ynetic/particle/compare/v0.1.5...v0.1.6) (2023-11-25)
 
 
