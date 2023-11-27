@@ -1,6 +1,6 @@
 {
   "name": "@ynetic/particle",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "A ReactJs component library",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

@@ -1,3 +1,15 @@
+# [0.2.0](https://github.com/ynetic/particle/compare/v0.1.7...v0.2.0) (2023-11-27)
+
+
+### Bug Fixes
+
+* **select:** update select to use popover ([06c7b18](https://github.com/ynetic/particle/commit/06c7b184d55aad6ccf9e2d5e42794115991cc7dc))
+
+
+### Features
+
+* **popover:** add popover and menu ([b7634ac](https://github.com/ynetic/particle/commit/b7634ac396dd21bd2a521255dda1979aa2280e31))
+
 ## [0.1.7](https://github.com/ynetic/particle/compare/v0.1.6...v0.1.7) (2023-11-25)
 
 
