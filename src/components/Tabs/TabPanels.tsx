@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 
 const Container = styled.div`
   padding: 8px;

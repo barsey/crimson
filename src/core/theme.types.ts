@@ -1,3 +1,5 @@
+import { ButtonVariants, ParticleColor } from '../components/types';
+
 export interface ParticleColorTheme {
   colors: {
     primary: string;
@@ -9,5 +11,20 @@ export interface ParticleColorTheme {
   };
 }
 export interface ParticleTheme extends ParticleColorTheme {
-  getContrastText: Function;
+  getContrastText: (background: string) => string;
+  getButtonBackground: (
+    theme: ParticleTheme,
+    color?: ParticleColor,
+    variant?: ButtonVariants,
+  ) => string;
+  getButtonColor: (
+    theme: ParticleTheme,
+    color?: ParticleColor,
+    variant?: ButtonVariants,
+  ) => string;
+  getButtonBorder: (
+    theme: ParticleTheme,
+    color?: ParticleColor,
+    variant?: ButtonVariants,
+  ) => string;
 }

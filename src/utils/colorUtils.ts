@@ -1,3 +1,6 @@
+import { ButtonVariants, ParticleColor } from '../components/types';
+import { ParticleTheme } from '../core/theme.types';
+
 export const contrastThreshold = 4.5;
 
 function hexToRgb(hex: string) {
@@ -59,4 +62,55 @@ export function getContrastText(background: string) {
   }
 
   return contrastText;
+}
+
+export function getButtonBackground(
+  theme: ParticleTheme,
+  color?: ParticleColor,
+  variant?: ButtonVariants,
+) {
+  switch (variant) {
+    case 'default':
+      return 'inherit';
+
+    case 'outlined':
+      return 'inherit';
+
+    case 'contained':
+      return color ? theme.colors[color] : theme.colors.primary;
+
+    case 'gradient':
+      return `linear-gradient(250deg, ${theme.colors.primary}, ${theme.colors.secondary})`;
+    default:
+      return '#fff';
+  }
+}
+
+export function getButtonColor(
+  theme: ParticleTheme,
+  color?: ParticleColor,
+  variant?: ButtonVariants,
+) {
+  const defaultColor = color ? theme.colors[color] : theme.colors.primary;
+  switch (variant) {
+    case 'contained':
+    case 'gradient':
+      return color ? getContrastText(theme.colors[color]) : '#fff';
+    default:
+      return defaultColor;
+  }
+}
+
+export function getButtonBorder(
+  theme: ParticleTheme,
+  color?: ParticleColor,
+  variant?: ButtonVariants,
+) {
+  const defaultColor = color ? theme.colors[color] : theme.colors.primary;
+  switch (variant) {
+    case 'outlined':
+      return `1px solid ${defaultColor}`;
+    default:
+      return '0';
+  }
 }

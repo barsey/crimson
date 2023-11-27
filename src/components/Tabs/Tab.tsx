@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 
 type TabProps = {
@@ -11,6 +10,7 @@ type TabProps = {
 export function Tab(props: TabProps) {
   const { selectedTabIndex, index, label, onClick } = props;
   const isSelected = index === selectedTabIndex;
+
   return (
     <li className={isSelected ? 'selected' : ''} onClick={() => onClick(index)}>
       {`${label}`}

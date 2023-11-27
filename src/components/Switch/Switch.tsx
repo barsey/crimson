@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import styled from '@emotion/styled';
-import React from 'react';
 import { DefaultParticleProps, ParticleColor } from '../types';
+import { ELEVATION_STYLE } from '../../core/constants';
 
 const DefaultSize = 24;
 const SwitchSizeMap = {
@@ -70,10 +70,7 @@ function Switch({ label, size, color, checked = false, onToggle }: Props) {
         isOn={checked}
         height={height}
         color={color}
-        whileHover={{
-          scale: 1.1,
-          boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
-        }}
+        whileHover={ELEVATION_STYLE}
       >
         <SwitchElement isOn={checked} onClick={onToggle}>
           <MotionHandleElement height={height} layout transition={spring} />
