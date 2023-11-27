@@ -2,7 +2,7 @@ import { MouseEventHandler, PropsWithChildren, forwardRef } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { ButtonVariants, DefaultParticleProps } from '../types';
-import { useThemeSizing } from '../../core/useThemeSizing';
+import { useButtonSizing } from '../../core/useThemeSizing';
 import { ELEVATION_STYLE } from '../../core/constants';
 
 interface ButtonProps extends DefaultParticleProps {
@@ -47,7 +47,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
     },
     ref,
   ) => {
-    const buttonStyleClass = useThemeSizing({ size });
+    const buttonStyleClass = useButtonSizing({ size });
     return (
       <StyledButton
         ref={ref}

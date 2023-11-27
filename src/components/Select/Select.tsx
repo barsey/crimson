@@ -1,14 +1,30 @@
 import React, { useEffect, useRef, useState, useId } from 'react';
 import styled from '@emotion/styled';
+import {
+  useFloating,
+  useClick,
+  useDismiss,
+  useRole,
+  useListNavigation,
+  useInteractions,
+  FloatingFocusManager,
+  offset,
+  flip,
+  size,
+  autoUpdate,
+  FloatingPortal,
+} from '@floating-ui/react';
 import { CloseIcon } from '../Icons/CloseIcon';
 import { UpDownIcon } from '../Icons/UpDownIcon';
 import { DefaultParticleProps, ParticleColor } from '../types';
+import { useThemeScales, useThemeSizing } from '../../core/useThemeSizing';
 
 const SelectContainer = styled.div`
   position: relative;
   box-sizing: border-box;
   min-width: 200px;
   width: 100%;
+  // height: 36px;
 `;
 
 const SelectControl = styled.div<{ color?: ParticleColor }>`
@@ -17,7 +33,7 @@ const SelectControl = styled.div<{ color?: ParticleColor }>`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  min-height: 38px;
+  // height: 100%;
   position: relative;
   transition: all 100ms ease 0s;
   background-color: rgb(255, 255, 255);
@@ -31,7 +47,6 @@ const SelectControl = styled.div<{ color?: ParticleColor }>`
   &.menu-visible {
     border-color: ${({ theme, color }) =>
       color ? theme.colors[color] : theme.colors.primary};
-    // box-shadow: rgb(38, 132, 255) 0px 0px 0px 1px;
   }
 `;
 
@@ -42,7 +57,7 @@ const SelectValueContainer = styled.div`
   flex-wrap: wrap;
   position: relative;
   overflow: hidden;
-  padding: 2px 8px;
+  padding: 0 8px;
   box-sizing: border-box;
 `;
 
@@ -58,10 +73,10 @@ const SelectIndicator = styled.div`
   display: flex;
   transition: color 150ms ease 0s;
   color: rgb(204, 204, 204);
-  padding: 6px;
+  padding: 4px;
   box-sizing: border-box;
 
-  display: inline-block;
+  display: flex;
   fill: currentcolor;
   line-height: 1;
   stroke: currentcolor;
@@ -76,7 +91,7 @@ const SelectIndicator = styled.div`
 `;
 
 const SelectInput = styled.div`
-  padding: 4px;
+  // padding: 4px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -84,13 +99,8 @@ const SelectInput = styled.div`
 `;
 
 const SelectMenu = styled.div`
-  position: absolute;
-  transform: translateY(100px);
-  width: 100%;
-
-  border-radius: 5px;
-  overflow: auto;
-  max-height: 150px;
+  border-radius: 8px;
+  overflow-y: auto;
   background-color: #fff;
 
   box-shadow:
@@ -98,7 +108,7 @@ const SelectMenu = styled.div`
     0 4px 11px hsla(0, 0%, 0%, 0.1);
 
   .select-menu-item {
-    padding: 5px;
+    padding: 10px;
     cursor: pointer;
     &:hover {
       background-color: #9fc3f870;
@@ -138,13 +148,13 @@ const TagLabel = styled.div`
   color: rgb(51, 51, 51);
   font-size: 85%;
   box-sizing: border-box;
-  height: 18px;
+  // height: 18px;
   display: flex;
   align-items: center;
   padding: 2px 2px;
 
   &.single {
-    height: 24px;
+    // height: 24px;
     padding: 4px 2px;
     font-size: 100%;
   }
@@ -155,7 +165,7 @@ const SelectCloseContainer = styled.span`
   align-items: center;
 
   &.multiple {
-    height: 14px;
+    // height: 14px;
     width: 14px;
     &:hover {
       background-color: #ddd;
@@ -216,27 +226,59 @@ const Select: React.FC<SelectProps> = (props) => {
     onChange,
     value,
     label,
+    size: SelectSize,
   } = props;
   const [showMenu, setShowMenu] = useState(false);
+  const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
+
   const [selectedValue, setSelectedValue] = useState<SelectKeyValue[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const searchRef = useRef<HTMLInputElement>(null);
-  const inputRef = useRef<HTMLDivElement>(null);
-  const controlId = useId();
 
-  useEffect(() => {
-    const handler = (event: any) => {
-      if (inputRef.current && !inputRef.current.contains(event.target)) {
+  const { refs, floatingStyles, context } = useFloating({
+    placement: 'bottom-start',
+    open: showMenu,
+    onOpenChange: (open: boolean, event, reason) => {
+      if (reason === 'outside-press' || reason === 'escape-key') {
         setShowMenu(false);
+      } else {
+        setShowMenu(true);
       }
-    };
+    },
+    whileElementsMounted: autoUpdate,
+    middleware: [
+      offset(5),
+      flip({ padding: 10 }),
+      size({
+        apply({ rects, elements, availableHeight }) {
+          Object.assign(elements.floating.style, {
+            maxHeight: `${availableHeight}px`,
+            minWidth: `${rects.reference.width}px`,
+          });
+        },
+        padding: 10,
+      }),
+    ],
+  });
 
-    window.addEventListener('click', handler);
+  const listRef = React.useRef<Array<HTMLElement | null>>([]);
+  // const isTypingRef = React.useRef(false);
+  const controlId = useId();
+  const click = useClick(context, { event: 'mousedown' });
+  const dismiss = useDismiss(context);
+  const role = useRole(context, { role: 'listbox' });
+  const listNav = useListNavigation(context, {
+    listRef,
+    activeIndex,
 
-    return () => {
-      window.removeEventListener('click', handler);
-    };
-  }, []);
+    onNavigate: setActiveIndex,
+    // This is a large list, allow looping.
+    loop: true,
+  });
+
+  const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
+    [dismiss, role, listNav, click],
+  );
 
   useEffect(() => {
     if (value) {
@@ -250,10 +292,6 @@ const Select: React.FC<SelectProps> = (props) => {
       searchRef.current.focus();
     }
   }, [showMenu]);
-
-  const handleInputClick = (event: React.MouseEvent<HTMLElement>) => {
-    setShowMenu(!showMenu);
-  };
 
   const getDisplay = () => {
     if (!selectedValue || selectedValue.length === 0) {
@@ -288,8 +326,9 @@ const Select: React.FC<SelectProps> = (props) => {
       );
   };
 
-  const onItemSelect = (option: SelectKeyValue) => {
+  const onItemSelect = (option: SelectKeyValue, index: number) => {
     let newValue;
+
     if (multiple) {
       if (
         selectedValue.findIndex((o) => o[valueKey] === option[valueKey]) >= 0
@@ -304,6 +343,7 @@ const Select: React.FC<SelectProps> = (props) => {
 
     setSelectedValue(newValue);
     onChangeHandler(newValue);
+    setShowMenu(false);
   };
 
   const isSelected = (option: SelectKeyValue) => {
@@ -328,19 +368,20 @@ const Select: React.FC<SelectProps> = (props) => {
     event: React.MouseEvent<HTMLElement>,
     option: SelectKeyValue,
   ) => {
-    event.stopPropagation();
+    event.preventDefault();
     const newValue = removeOption(option);
     setSelectedValue(newValue);
     onChangeHandler(newValue);
   };
 
   const onClearSelected = (event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
+    event.preventDefault();
     setSelectedValue([]);
     onChangeHandler([]);
   };
 
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     setSearchValue(e.target.value);
   };
   const getOptions = () => {
@@ -353,44 +394,98 @@ const Select: React.FC<SelectProps> = (props) => {
     );
   };
 
+  const sizeStyles = useThemeSizing({ size: SelectSize });
+
   return (
     <SelectContainer>
-      {label && <label>{label}</label>}
+      {label && (
+        <label id={controlId} css={sizeStyles}>
+          {label}
+        </label>
+      )}
       <SelectControl
-        tabIndex={-1}
-        ref={inputRef}
-        onClick={handleInputClick}
         className={`${showMenu && 'menu-visible'}`}
+        css={sizeStyles}
+        ref={refs.setReference}
+        aria-labelledby={controlId}
+        aria-autocomplete='none'
+        {...getReferenceProps()}
         role='button'
       >
         <SelectValueContainer>
           <SelectInput>
-            <SelectInputContent>{getDisplay()}</SelectInputContent>
+            <SelectInputContent
+              tabIndex={0}
+              ref={refs.setReference}
+              aria-labelledby={controlId}
+              aria-autocomplete='none'
+              {...getReferenceProps()}
+            >
+              {getDisplay()}
+            </SelectInputContent>
           </SelectInput>
         </SelectValueContainer>
         {showMenu && (
-          <SelectMenu>
-            {searchable && (
-              <SearchBox>
-                <input
-                  onChange={onSearch}
-                  value={searchValue}
-                  ref={searchRef}
-                />
-              </SearchBox>
-            )}
-            {getOptions().map((option: SelectKeyValue) => (
-              <div
-                onClick={() => onItemSelect(option)}
-                key={option[valueKey]}
-                className={`select-menu-item ${
-                  isSelected(option) && 'selected'
-                }`}
+          <FloatingPortal>
+            <FloatingFocusManager context={context} modal={false}>
+              <SelectMenu
+                ref={refs.setFloating}
+                style={{
+                  ...floatingStyles,
+                  minWidth: 100,
+                  outline: 0,
+                }}
+                {...getFloatingProps()}
               >
-                {option[labelKey]}
-              </div>
-            ))}
-          </SelectMenu>
+                {searchable && (
+                  <SearchBox>
+                    <input
+                      onChange={onSearch}
+                      value={searchValue}
+                      ref={searchRef}
+                    />
+                  </SearchBox>
+                )}
+                {getOptions().map((option: SelectKeyValue, index: number) => (
+                  <div
+                    ref={(node) => {
+                      listRef.current[index] = node;
+                    }}
+                    role='option'
+                    tabIndex={index === activeIndex ? 0 : -1}
+                    aria-selected={isSelected(option)}
+                    key={option[valueKey] + index}
+                    className={`select-menu-item ${
+                      isSelected(option) && 'selected'
+                    }`}
+                    {...getItemProps({
+                      // Handle pointer select.
+                      onClick: (event) => {
+                        onItemSelect(option, index);
+                      },
+
+                      // Handle keyboard select.
+                      onKeyDown(event) {
+                        if (event.key === 'Enter') {
+                          event.preventDefault();
+
+                          onItemSelect(option, index);
+                        }
+
+                        if (event.key === ' ') {
+                          event.preventDefault();
+
+                          onItemSelect(option, index);
+                        }
+                      },
+                    })}
+                  >
+                    {option[labelKey]}
+                  </div>
+                ))}
+              </SelectMenu>
+            </FloatingFocusManager>
+          </FloatingPortal>
         )}
         <SelectIndicators>
           <SelectIndicator>
