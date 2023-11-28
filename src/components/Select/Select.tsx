@@ -17,7 +17,7 @@ import {
 import { CloseIcon } from '../Icons/CloseIcon';
 import { UpDownIcon } from '../Icons/UpDownIcon';
 import { DefaultParticleProps, ParticleColor } from '../types';
-import { useThemeScales, useThemeSizing } from '../../core/useThemeSizing';
+import { useThemeSizing } from '../../core/useThemeSizing';
 
 const SelectContainer = styled.div`
   position: relative;

@@ -39,6 +39,7 @@ function NestedRender(args) {
     <Menu label='Edit'>
       <MenuItem label='Undo' onClick={() => console.log('Undo')} />
       <MenuItem label='Redo' disabled />
+
       <MenuItem label='Cut' />
       <Menu label='Copy as'>
         <MenuItem label='Text' />

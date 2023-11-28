@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import styled from '@emotion/styled';
 import { DefaultParticleProps, ParticleColor } from '../types';
-import { ELEVATION_STYLE } from '../../core/constants';
+import { ELEVATION_STYLE } from '../constants';
 
 const DefaultSize = 24;
 const SwitchSizeMap = {

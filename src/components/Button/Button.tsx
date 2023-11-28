@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { ButtonVariants, DefaultParticleProps } from '../types';
 import { useButtonSizing } from '../../core/useThemeSizing';
-import { ELEVATION_STYLE } from '../../core/constants';
+import { ELEVATION_STYLE } from '../constants';
 
 interface ButtonProps extends DefaultParticleProps {
   disabled?: boolean;
@@ -11,6 +11,9 @@ interface ButtonProps extends DefaultParticleProps {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   variant?: ButtonVariants;
   type?: 'button' | 'submit' | 'reset';
+  tabIndex?: number;
+  role?: React.AriaRole;
+  className?: string;
 }
 
 const StyledButton = styled(motion.button)<ButtonProps>`
