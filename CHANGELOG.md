@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/ynetic/particle/compare/v0.2.1...v0.3.0) (2023-11-28)
+
+
+### Features
+
+* **Tooltip:** add tooltip component ([94b6202](https://github.com/ynetic/particle/commit/94b62026fe06ffc95d201bfc19fdb60cae385a8b))
+
 ## [0.2.1](https://github.com/ynetic/particle/compare/v0.2.0...v0.2.1) (2023-11-28)
 
 
