@@ -1,3 +1,11 @@
+## [0.2.1](https://github.com/ynetic/particle/compare/v0.2.0...v0.2.1) (2023-11-28)
+
+
+### Bug Fixes
+
+* **deps:** remove unwanted deps ([9429cd9](https://github.com/ynetic/particle/commit/9429cd9a7a4cd1bb778521c0f2b67c4af35c845f))
+* **refactor:** expose popover and menu components ([3915629](https://github.com/ynetic/particle/commit/39156293ad32c968bd2c685ca5f4aaf745315b43))
+
 # [0.2.0](https://github.com/ynetic/particle/compare/v0.1.7...v0.2.0) (2023-11-27)
 
 
