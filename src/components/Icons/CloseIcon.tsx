@@ -1,5 +1,3 @@
-import React from 'react';
-
 const CloseIcon = () => (
   <svg
     viewBox='0 0 15 15'

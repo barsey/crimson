@@ -4,7 +4,7 @@ import ParticleProvider from '../core/ParticleProvider';
 
 const InstallationSteps = (props: {
   yarnStep: React.ReactNode;
-  npmStep: any;
+  npmStep: React.ReactNode;
 }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const { yarnStep, npmStep } = props;

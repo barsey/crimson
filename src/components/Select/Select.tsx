@@ -208,7 +208,7 @@ type SelectProps = DefaultParticleProps & {
   options: SelectKeyValue[];
   valueKey: string;
   labelKey: string;
-  onChange?: Function;
+  onChange?: (value: SelectKeyValue[] | SelectKeyValue | null) => void;
   value?: SelectKeyValue;
   multiple?: boolean;
   searchable?: boolean;
@@ -238,7 +238,7 @@ const Select: React.FC<SelectProps> = (props) => {
   const { refs, floatingStyles, context } = useFloating({
     placement: 'bottom-start',
     open: showMenu,
-    onOpenChange: (open: boolean, event, reason) => {
+    onOpenChange: (_open: boolean, _event, reason) => {
       if (reason === 'outside-press' || reason === 'escape-key') {
         setShowMenu(false);
       } else {
@@ -326,7 +326,7 @@ const Select: React.FC<SelectProps> = (props) => {
       );
   };
 
-  const onItemSelect = (option: SelectKeyValue, index: number) => {
+  const onItemSelect = (option: SelectKeyValue) => {
     let newValue;
 
     if (multiple) {
@@ -460,8 +460,8 @@ const Select: React.FC<SelectProps> = (props) => {
                     }`}
                     {...getItemProps({
                       // Handle pointer select.
-                      onClick: (event) => {
-                        onItemSelect(option, index);
+                      onClick: () => {
+                        onItemSelect(option);
                       },
 
                       // Handle keyboard select.
@@ -469,13 +469,13 @@ const Select: React.FC<SelectProps> = (props) => {
                         if (event.key === 'Enter') {
                           event.preventDefault();
 
-                          onItemSelect(option, index);
+                          onItemSelect(option);
                         }
 
                         if (event.key === ' ') {
                           event.preventDefault();
 
-                          onItemSelect(option, index);
+                          onItemSelect(option);
                         }
                       },
                     })}

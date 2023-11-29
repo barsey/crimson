@@ -58,7 +58,7 @@ interface MenuItemProps {
 export const MenuItem = React.forwardRef<
   HTMLButtonElement,
   MenuItemProps & React.ButtonHTMLAttributes<HTMLButtonElement>
->(({ label, disabled, ...props }, forwardedRef) => {
+>(({ label, disabled, onClick, onFocus, ...props }, forwardedRef) => {
   const menu = React.useContext(MenuContext);
   const item = useListItem({ label: disabled ? null : label });
   const tree = useFloatingTree();
@@ -75,11 +75,11 @@ export const MenuItem = React.forwardRef<
       disabled={disabled}
       {...menu.getItemProps({
         onClick(event: React.MouseEvent<HTMLButtonElement>) {
-          props.onClick?.(event);
+          onClick?.(event);
           tree?.events.emit('click');
         },
         onFocus(event: React.FocusEvent<HTMLButtonElement>) {
-          props.onFocus?.(event);
+          onFocus?.(event);
           menu.setHasFocusInside(true);
         },
       })}

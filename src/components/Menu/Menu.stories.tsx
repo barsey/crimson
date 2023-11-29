@@ -24,7 +24,7 @@ const meta: Meta<typeof Menu> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-function Render(args) {
+function Render() {
   return (
     <Menu label='Edit'>
       <MenuItem label='Undo' onClick={() => console.log('Undo')} />
@@ -34,7 +34,7 @@ function Render(args) {
   );
 }
 
-function NestedRender(args) {
+function NestedRender() {
   return (
     <Menu label='Edit'>
       <MenuItem label='Undo' onClick={() => console.log('Undo')} />

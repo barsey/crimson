@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, FC, Fragment } from 'react';
+import { ChangeEventHandler, FC, Fragment } from 'react';
 import styled from '@emotion/styled';
 
 export interface InputProps {

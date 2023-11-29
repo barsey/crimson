@@ -64,7 +64,7 @@ const TooltipTrigger = forwardRef<
   React.HTMLProps<HTMLElement> & { asChild?: boolean }
 >(function TooltipTrigger({ children, asChild = false, ...props }, propRef) {
   const context = useTooltipContext();
-  const childrenRef = (children as any).ref;
+  const childrenRef = (children as any).ref; // eslint-disable-line
   const ref = useMergeRefs([context.refs.setReference, propRef, childrenRef]);
 
   // `asChild` allows the user to pass any element as the anchor

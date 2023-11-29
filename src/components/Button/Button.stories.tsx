@@ -30,7 +30,7 @@ const ButtonContainer = styled.div`
   flex-wrap: wrap;
 `;
 
-function DefaultRender(args) {
+function DefaultRender() {
   return (
     <ButtonContainer>
       <Button>Default</Button>

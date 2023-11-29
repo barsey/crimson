@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 
 const Content = styled(motion.div)`
   padding: 2px 8px;

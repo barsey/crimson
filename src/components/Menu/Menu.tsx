@@ -26,7 +26,6 @@ import {
 } from '@floating-ui/react';
 import React from 'react';
 import { MenuContext } from './MenuContext';
-import { Button } from '../Button';
 
 interface MenuProps {
   label: string;
