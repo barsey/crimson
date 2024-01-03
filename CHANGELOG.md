@@ -1,3 +1,10 @@
+# [0.4.0](https://github.com/ynetic/particle/compare/v0.3.0...v0.4.0) (2024-01-03)
+
+
+### Features
+
+* add snackbar and alert components ([595fe29](https://github.com/ynetic/particle/commit/595fe29cbd2f0406e609d05eb12c60c9227d016d))
+
 # [0.3.0](https://github.com/ynetic/particle/compare/v0.2.1...v0.3.0) (2023-11-28)
 
 
