@@ -27,23 +27,71 @@ jobs:
           persist-credentials: false
           ref: main
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Notify build started
+        id: initial_message
+        uses: ./.github/actions/slack-notify
         with:
-          node-version: 18.18.0
-          registry-url: https://registry.npmjs.org/
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
 
-      - name: Install Dependencies
-        run: yarn install
+      - uses: ./.github/actions/install-dependencies
 
       - name: Linting
         run: yarn lint
+
+      - uses: ./.github/actions/slack-notify
+        with:
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          message: 'Lint check is successful :tada:'
+          thread_ts: ${{ steps.initial_message.outputs.thread_ts }}
+
+      - name: Tests
+        run: yarn test:coverage
+
+      - uses: ./.github/actions/slack-notify
+        with:
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          message: 'Test run is successful :tada:'
+          thread_ts: ${{ steps.initial_message.outputs.thread_ts }}
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          fail_ci_if_error: true
+          flags: unittests
+          verbose: true
 
       - name: Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_ACCESS_TOKEN }}
         run: npx semantic-release --ci
+
+      - name: Read Package.json Version and Name
+        run: |
+          # Read and print the version from package.json using node
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+          echo "Package Version: $PACKAGE_VERSION"
+          echo "Package Name: $PACKAGE_NAME"
+          echo "PACKAGE_VERSION=$PACKAGE_VERSION" >> $GITHUB_ENV
+          echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
+
+      - uses: ./.github/actions/slack-notify
+        with:
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          message: 'Changelog generated. Github Release created for *v${{env.PACKAGE_VERSION}}* :tada:'
+          thread_ts: ${{ steps.initial_message.outputs.thread_ts }}
+
+      - uses: ./.github/actions/slack-notify
+        with:
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          message: 'Release version *${{env.PACKAGE_NAME}}@${{env.PACKAGE_VERSION}}* published to NPM :tada:'
+          thread_ts: ${{ steps.initial_message.outputs.thread_ts }}
 
       - name: Build storybook
         run: yarn build-storybook
@@ -53,3 +101,20 @@ jobs:
         with:
           branch: gh-pages
           folder: storybook-static # output folder from `yarn build-storybook`
+
+      - uses: ./.github/actions/slack-notify
+        with:
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          message: 'Storybook deployed to github pages :tada:'
+          thread_ts: ${{ steps.initial_message.outputs.thread_ts }}
+
+      - name: Notify build status
+        id: final_message
+        if: always()
+        uses: ./.github/actions/slack-notify
+        with:
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          status: ${{job.status}}
+          update_ts: ${{ steps.initial_message.outputs.ts }}

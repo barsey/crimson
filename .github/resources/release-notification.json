@@ -1,0 +1,47 @@
+{
+  "text": "${{env.RELEASE_TYPE}} build is triggered. Build is ${{env.JOB_STATUS}} ${{env.STATUS_EMOJI}}",
+  "attachments": [
+    {
+      "color": "${{ env.STATUS_COLOR }}",
+      "blocks": [
+        {
+          "type": "section",
+          "text": {
+            "type": "mrkdwn",
+            "text": "*Repo*: <${{ env.REPO_URL }}|${{ env.REPO_NAME }}>"
+          }
+        },
+        {
+          "type": "context",
+          "elements": [
+            {
+              "type": "mrkdwn",
+              "text": "Author: <${{ env.AUTHOR_URL }}|${{env.AUTHOR_NAME}}>"
+            },
+            {
+              "type": "mrkdwn",
+              "text": "Build Status: <${{env.JOB_URL}}|${{env.JOB_STATUS}}> ${{env.STATUS_EMOJI}}"
+            }
+          ]
+        },
+        {
+          "type": "context",
+          "elements": [
+            {
+              "type": "mrkdwn",
+              "text": "<${{env.CHANGELOG_URL}}|Changelog>"
+            },
+            {
+              "type": "mrkdwn",
+              "text": "<${{env.RELEASES_URL}}|Releases>"
+            }
+          ]
+        },
+        {
+          "type": "divider"
+        }
+      ]
+    }
+  ],
+  "thread_ts": "${{ env.THREAD_TS }}"
+}

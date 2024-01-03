@@ -2,34 +2,94 @@ name: Pull Request
 
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [opened, synchronize, reopened, edited]
 
 jobs:
   lint_build_test:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
-
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
 
-      - name: Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - name: Notify build started
+        id: initial_message
+        uses: ./.github/actions/slack-notify
         with:
-          node-version: ${{ matrix.node-version }}
-          registry-url: https://registry.npmjs.org/
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
 
-      - name: Install Dependencies
-        run: yarn
+      - uses: ./.github/actions/install-dependencies
+
+      - name: Validate PR Title
+        run: |
+          PR_TITLE="${{ github.event.pull_request.title }}"
+
+          echo "$PR_TITLE" | npx commitlint
+
+      - uses: ./.github/actions/slack-notify
+        with:
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          message: 'PR Title check is successful :tada:'
+          thread_ts: ${{ steps.initial_message.outputs.thread_ts }}
+
+      - name: Run Prettier check
+        run: npx prettier . --check
+
+      - uses: ./.github/actions/slack-notify
+        with:
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          message: 'Prettier check is successful :tada:'
+          thread_ts: ${{ steps.initial_message.outputs.thread_ts }}
 
       - name: Linting
         run: yarn lint
+
+      - uses: ./.github/actions/slack-notify
+        with:
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          message: 'Lint check is successful :tada:'
+          thread_ts: ${{ steps.initial_message.outputs.thread_ts }}
+
+      - name: Tests
+        run: yarn test:coverage
+
+      - uses: ./.github/actions/slack-notify
+        with:
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          message: 'Test run is successful :tada:'
+          thread_ts: ${{ steps.initial_message.outputs.thread_ts }}
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          fail_ci_if_error: true
+          flags: unittests
+          verbose: true
 
       - name: Build
         run: yarn build
 
       - name: Build storybook
         run: yarn build-storybook
+
+      - uses: ./.github/actions/slack-notify
+        with:
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          message: 'Generating assets is successful :tada:'
+          thread_ts: ${{ steps.initial_message.outputs.thread_ts }}
+
+      - name: Notify build status
+        id: final_message
+        if: always()
+        uses: ./.github/actions/slack-notify
+        with:
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+          status: ${{job.status}}
+          update_ts: ${{ steps.initial_message.outputs.ts }}

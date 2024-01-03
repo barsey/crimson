@@ -1,0 +1,13 @@
+name: 'Install Dependencies'
+description: 'Set up node and install dependencies'
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+        registry-url: https://registry.npmjs.org/
+
+    - run: yarn
+      shell: bash
