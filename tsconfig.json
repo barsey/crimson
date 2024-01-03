@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["node", "vitest/globals"],
     "esModuleInterop": true,
     "strict": true,
     "skipLibCheck": true,
@@ -13,13 +14,13 @@
     "moduleResolution": "node",
     "emitDeclarationOnly": true,
     "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/utils/*": ["src/utils/*"],
+      "@/theming/*": ["src/theming/*"]
+    }
   },
-  "exclude": [
-    "dist",
-    "node_modules",
-    "src/**/*.test.tsx",
-    "src/stories",
-    "**/*.stories.tsx"
-  ]
+  "include": ["src", "src/**/*.tsx"],
+  "exclude": ["dist", "node_modules", "src/stories", "**/*.stories.tsx"]
 }

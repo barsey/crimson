@@ -11,6 +11,8 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
+    'plugin:vitest/recommended',
+    'plugin:react-hooks/recommended',
     'plugin:react/jsx-runtime',
   ],
   parser: '@typescript-eslint/parser',
@@ -21,7 +23,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'react', 'prettier'],
+  plugins: ['@typescript-eslint', 'react', 'vitest', 'prettier'],
   rules: {
     'react/no-unknown-property': [ERROR, { ignore: ['css'] }],
     'react/display-name': OFF,

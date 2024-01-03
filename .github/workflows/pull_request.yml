@@ -54,6 +54,16 @@ jobs:
           message: 'Lint check is successful :tada:'
           thread_ts: ${{ steps.initial_message.outputs.thread_ts }}
 
+      - name: Tests
+        run: yarn test
+
+      - uses: ./.github/actions/slack-notify
+        with:
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID_UI_PLATFORM }}
+          slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN_UI_PLATFORM }}
+          message: 'Test run is successful :tada:'
+          thread_ts: ${{ steps.initial_message.outputs.thread_ts }}
+
       - name: Build
         run: yarn build
 
