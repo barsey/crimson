@@ -9,6 +9,7 @@
 # Particle
 
 ![Build Status](https://github.com/ynetic/particle/actions/workflows/release.yml/badge.svg)
+![Codecov](https://img.shields.io/codecov/c/github/ynetic/particle)
 [![NPM License](https://img.shields.io/npm/l/@ynetic/particle)](https://github.com/ynetic/particle/blob/main/LICENSE)
 [![GitHub contributors](https://img.shields.io/github/contributors/ynetic/particle)](https://github.com/ynetic/particle/graphs/contributors)
 [![NPM](https://img.shields.io/npm/v/@ynetic/particle.svg)](https://www.npmjs.com/package/@ynetic/particle)
