@@ -1,0 +1,102 @@
+name: 'Slack Notify'
+description: 'Send slack notifications'
+
+inputs:
+  channel_id:
+    description: 'Slack Channel ID'
+    required: true
+    type: string
+  slack_bot_token:
+    description: 'Slack BOT Token'
+    required: true
+    type: string
+  status:
+    description: 'Job Status'
+    required: false
+    type: string
+    default: 'running'
+  thread_ts:
+    description: 'Slack thread_ts'
+    required: false
+    type: string
+  update_ts:
+    description: 'Slack update-ts'
+    required: false
+    type: string
+  message:
+    description: 'Slack message'
+    required: false
+    type: string
+
+outputs:
+  thread_ts:
+    description: 'thread timestamp'
+    value: ${{ steps.post_payload_message_pr.outputs.thread_ts || steps.post_payload_message_push.outputs.thread_ts || steps.post_message.outputs.thread_ts }}
+  ts:
+    description: 'timestamp'
+    value: ${{ steps.post_payload_message_pr.outputs.ts || steps.post_payload_message_push.outputs.ts || steps.post_message.outputs.ts }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Post build status using payload for PR event
+      id: post_payload_message_pr
+      if: github.event_name == 'pull_request' && inputs.message == ''
+      uses: slackapi/slack-github-action@v1.24.0
+      with:
+        channel-id: ${{ inputs.channel_id }}
+        update-ts: ${{ inputs.update_ts }}
+        payload-file-path: ./.github/resources/pr-notification.json
+      env:
+        SLACK_BOT_TOKEN: ${{ inputs.slack_bot_token }}
+        JOB_STATUS: ${{inputs.status}}
+        JOB_URL: ${{ github.server_url }}/${{github.repository}}/actions/runs/${{github.run_id}}
+        STATUS_COLOR: ${{ inputs.status == 'success' && '#48BD62' || inputs.status == 'failure' && '#E61E25' || inputs.status == 'cancelled' && 'warning' || '#439FE0' }}
+        STATUS_EMOJI: ${{ inputs.status == 'running' && ':running:' || inputs.status == 'success' && ':tada:' || inputs.status == 'failure' && ':umbrella:' || inputs.status == 'cancelled' && 'warning' || ':snail:' }}
+        REPO_URL: ${{ github.server_url }}/${{github.repository }}
+        REPO_NAME: ${{ github.repository }}
+        PR_URL: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}
+        PR_TITLE: ${{ github.event.pull_request.title }}
+        AUTHOR_NAME: ${{github.event.pull_request.user.login}}
+        AUTHOR_URL: ${{ github.server_url }}/${{github.event.pull_request.user.login}}
+        CHANGELOG_URL: ${{ github.server_url }}/${{github.repository }}/blob/main/CHANGELOG.md
+        RELEASES_URL: ${{ github.server_url }}/${{github.repository }}/releases
+        THREAD_TS: ${{inputs.thread_ts}}
+
+    - name: Post build status using payload for Push event
+      id: post_payload_message_push
+      if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && inputs.message == ''
+      uses: slackapi/slack-github-action@v1.24.0
+      with:
+        channel-id: ${{ inputs.channel_id }}
+        update-ts: ${{ inputs.update_ts }}
+        payload-file-path: ./.github/resources/release-notification.json
+      env:
+        SLACK_BOT_TOKEN: ${{ inputs.slack_bot_token }}
+        JOB_STATUS: ${{inputs.status}}
+        JOB_URL: ${{ github.server_url }}/${{github.repository}}/actions/runs/${{github.run_id}}
+        STATUS_COLOR: ${{ inputs.status == 'success' && '#48BD62' || inputs.status == 'failure' && '#E61E25' || inputs.status == 'cancelled' && 'warning' || '#439FE0' }}
+        STATUS_EMOJI: ${{ inputs.status == 'running' && ':running:' || inputs.status == 'success' && ':tada:' || inputs.status == 'failure' && ':umbrella:' || inputs.status == 'cancelled' && 'warning' || ':snail:' }}
+        REPO_URL: ${{ github.server_url }}/${{github.repository }}
+        REPO_NAME: ${{ github.repository }}
+        AUTHOR_NAME: ${{github.triggering_actor}}
+        AUTHOR_URL: ${{ github.server_url }}/${{github.triggering_actor}}
+        RELEASE_TYPE: ${{ github.event_name == 'push' && 'Snapshot' || github.event_name == 'workflow_dispatch' && 'Release' || github.event_name}}
+        CHANGELOG_URL: ${{ github.server_url }}/${{github.repository }}/blob/main/CHANGELOG.md
+        RELEASES_URL: ${{ github.server_url }}/${{github.repository }}/releases
+        THREAD_TS: ${{inputs.thread_ts}}
+
+    - name: Post build status using message
+      id: post_message
+      if: inputs.message != ''
+      uses: slackapi/slack-github-action@v1.24.0
+      with:
+        channel-id: ${{ inputs.channel_id }}
+        update-ts: ${{ inputs.update_ts }}
+        payload: |
+          {
+            "text": "${{inputs.message}}",
+            "thread_ts": "${{inputs.thread_ts}}"
+          }
+      env:
+        SLACK_BOT_TOKEN: ${{ inputs.slack_bot_token }}
