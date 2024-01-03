@@ -55,14 +55,21 @@ jobs:
           thread_ts: ${{ steps.initial_message.outputs.thread_ts }}
 
       - name: Tests
-        run: yarn test
+        run: yarn test:coverage
 
       - uses: ./.github/actions/slack-notify
         with:
-          channel_id: ${{ secrets.SLACK_CHANNEL_ID_UI_PLATFORM }}
-          slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN_UI_PLATFORM }}
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
           message: 'Test run is successful :tada:'
           thread_ts: ${{ steps.initial_message.outputs.thread_ts }}
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          fail_ci_if_error: true
+          flags: unittests
+          verbose: true
 
       - name: Build
         run: yarn build

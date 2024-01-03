@@ -19,7 +19,7 @@
     "lint:fix": "eslint --fix --ext .jsx,.js,.tsx,.ts src/",
     "test": "vitest --run",
     "test:watch": "vitest",
-    "coverage": "vitest run --coverage",
+    "test:coverage": "vitest run --coverage",
     "commit": "git-cz"
   },
   "author": "Barun Prasad",
