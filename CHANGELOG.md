@@ -1,3 +1,12 @@
+## [0.4.1](https://github.com/ynetic/particle/compare/v0.4.0...v0.4.1) (2024-01-03)
+
+
+### Bug Fixes
+
+* **ci:** add md files to prettier ignore list ([80341a4](https://github.com/ynetic/particle/commit/80341a4893da08bbf8c3b8bd1a3e099bb587e23c))
+* **ci:** update pr types in workflow ([6ee1ce7](https://github.com/ynetic/particle/commit/6ee1ce72e210d7edf1b31bfdde9e4ca98ac8b3e9))
+* update slack secrets and add codecov integration ([3196df4](https://github.com/ynetic/particle/commit/3196df4e9dbb78891c5f30074a4ef094aeb525cf))
+
 # [0.4.0](https://github.com/ynetic/particle/compare/v0.3.0...v0.4.0) (2024-01-03)
 
 
