@@ -1,3 +1,10 @@
+# [0.5.0](https://github.com/ynetic/particle/compare/v0.4.1...v0.5.0) (2024-06-25)
+
+
+### Features
+
+* update with new components ([#22](https://github.com/ynetic/particle/issues/22)) ([428e6aa](https://github.com/ynetic/particle/commit/428e6aa1a69f771175dd879ed5efdb5c76ad2c43))
+
 ## [0.4.1](https://github.com/ynetic/particle/compare/v0.4.0...v0.4.1) (2024-01-03)
 
 
