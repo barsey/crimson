@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useId } from 'react';
 
 const Container = styled.div`
   padding: 8px;
@@ -8,7 +8,19 @@ const Container = styled.div`
   width: 100%;
 `;
 
-export function TabPanels(props: PropsWithChildren) {
-  const { children } = props;
-  return <Container>{children}</Container>;
+export type TabPanelsProps = {
+  style?: React.CSSProperties;
+  className?: string;
+  id?: string;
+};
+
+export function TabPanels(props: PropsWithChildren<TabPanelsProps>) {
+  const { children, id, ...otherProps } = props;
+  const uniqueId = useId();
+  const tabPanelsId = id || uniqueId;
+  return (
+    <Container id={tabPanelsId} data-testid={tabPanelsId} {...otherProps}>
+      {children}
+    </Container>
+  );
 }

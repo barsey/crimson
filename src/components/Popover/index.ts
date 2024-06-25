@@ -6,3 +6,9 @@ export {
   PopoverTrigger,
   PopoverClose,
 } from './Popover';
+
+export type {
+  PopoverPlacement,
+  PopoverOptions,
+  PopoverTriggerProps,
+} from './Popover';

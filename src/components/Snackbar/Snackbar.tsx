@@ -69,4 +69,6 @@ const Snackbar = React.forwardRef<HTMLDivElement, SnackbarProps>(
   },
 );
 
+Snackbar.displayName = 'Snackbar';
+
 export default Snackbar;

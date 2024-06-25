@@ -1,7 +1,11 @@
 import { Meta, Source } from '@storybook/blocks';
 import InstallationSteps from './InstallationSteps';
+import { Alert } from '../components';
+import { ParticleProvider } from '../core';
 
     <Meta title='Getting Started' />
+
+    <ParticleProvider>
 
 # Getting started
 
@@ -9,28 +13,82 @@ Use Particle components based on the following steps
 
 ## 1. Install
 
-To use Particle in your project, run one of the following commands in your terminal
+To use Particle in your project, run one of the following commands in your terminal.
+
+<Alert>
+  Note: To support IE browsers, we are using v1.2.36 of
+  @fortawesome/fontawesome-svg-core which is needed for Fontawesome 5.
+</Alert>
 
     <InstallationSteps yarnStep={<Source
           dark
           code={`
 
-yarn add @ynetic/particle @emotion/react @emotion/styled framer-motion`}
+yarn add @ynetic/particle @emotion/react @emotion/styled framer-motion @fortawesome/fontawesome-svg-core @fortawesome/react-fontawesome`}
 />} npmStep={<Source
           dark
           code={`
 
-npm install @ynetic/particle @emotion/react @emotion/styled framer-motion`}
+npm install @ynetic/particle @emotion/react @emotion/styled framer-motion @fortawesome/fontawesome-svg-core @fortawesome/react-fontawesome`}
 />} />
 
-## 2. Configure your project
+## 2. Fonts
+
+Particle uses Roboto fonts. To use them, add it to your project via Fontsource, or with the Google Fonts CDN.
+
+    <InstallationSteps yarnStep={<Source
+          dark
+          code={`
+
+yarn add @fontsource/roboto`}
+/>} npmStep={<Source
+          dark
+          code={`
+
+npm install @fontsource/roboto`}
+/>} />
+
+### Import via Fontsource
+
+Then Import it in your project at the root component of your app.
+
+<Alert>
+  Note: Particle's default typography configuration relies only on the 400, 500,
+  and 700 font weights.
+</Alert>
+
+<Source
+  dark
+  code={`
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';`}
+/>
+
+### Or via Google Web Fonts
+
+To install Roboto through the Google Web Fonts CDN, add the following code inside your project's tag:
+
+<Source
+  dark
+  code={`
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+/>
+`}
+/>
+
+## 3. Configure your project
 
     <Source
           dark
           language="tsx"
           code={`
 
-// 1. import ParticleProvider component
+// 1. import ParticleProvider
 import { ParticleProvider } from '@ynetic/particle';
 
 export function App() {
@@ -41,3 +99,26 @@ export function App() {
     </ParticleProvider>
   );
 }`} />
+
+## 4. Importing and Using a Component
+
+After installing the library and following the configuration steps, you can start using its components in your project. Here's how to import and use the Button component:
+
+<Source
+          dark
+          language="tsx"
+          code={`
+
+// 1. import Button component
+import { Button } from '@ynetic/particle';
+
+export function App() {
+  // 2. Use the Button anywhere in the app
+  return (
+    <div className='App'>
+      <Button onClick={() => alert('Button clicked!')}>Click Me</Button>
+    </div>
+  );
+}`} />
+
+</ParticleProvider>

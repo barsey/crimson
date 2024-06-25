@@ -1,29 +1,14 @@
 import { css } from '@emotion/react';
+import { ParticleSize } from '../components/types';
 import {
   ParticleFontSizes,
   ParticleHeights,
-  ParticleSize,
   ParticleTextPadding,
-} from '../components/types';
-
-export function useButtonSizing({
-  size = 'medium',
-  height,
-}: {
-  size?: ParticleSize;
-  height?: number;
-}) {
-  const themeSizing = useThemeSizing({ size, height });
-
-  return css`
-    ${themeSizing};
-    padding: ${ParticleTextPadding[size]}rem ${ParticleTextPadding[size] * 2}rem;
-  `;
-}
+} from '../components/constants';
 
 export function useFontSizing({ size = 'medium' }: { size?: ParticleSize }) {
   return css`
-    font-size: ${ParticleFontSizes[size]}rem;
+    font-size: ${ParticleFontSizes[size]}px;
   `;
 }
 
@@ -53,7 +38,7 @@ export function useThemeSizing({
   const { fontSize, height } = useThemeScales({ size, height: elementHeight });
 
   return css`
-    font-size: ${fontSize}rem;
-    height: ${height}rem;
+    font-size: ${fontSize}px;
+    height: ${height}px;
   `;
 }

@@ -1,4 +1,5 @@
 import {
+  arrow,
   useFloating,
   autoUpdate,
   offset,
@@ -12,7 +13,7 @@ import {
 } from '@floating-ui/react';
 
 import { type Placement } from '@floating-ui/react';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 export interface TooltipOptions {
   initialOpen?: boolean;
@@ -27,6 +28,7 @@ export function useTooltip({
   open: controlledOpen,
   onOpenChange: setControlledOpen,
 }: TooltipOptions = {}) {
+  const arrowRef = useRef(null);
   const [uncontrolledOpen, setUncontrolledOpen] = useState(initialOpen);
 
   const open = controlledOpen ?? uncontrolledOpen;
@@ -45,6 +47,9 @@ export function useTooltip({
         padding: 5,
       }),
       shift({ padding: 5 }),
+      arrow({
+        element: arrowRef,
+      }),
     ],
   });
 
@@ -66,9 +71,10 @@ export function useTooltip({
     () => ({
       open,
       setOpen,
+      arrowRef,
       ...interactions,
       ...data,
     }),
-    [open, setOpen, interactions, data],
+    [open, setOpen, arrowRef, interactions, data],
   );
 }

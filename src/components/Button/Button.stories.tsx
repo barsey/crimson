@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-
 import { Button } from './Button';
-import React from 'react';
-import styled from '@emotion/styled';
+import { PropsWithChildren } from 'react';
+import { Box } from '../Box';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof Button> = {
@@ -25,145 +24,86 @@ type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 
-const ButtonContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
+const DownIcon = () => (
+  <svg
+    height='20'
+    width='20'
+    viewBox='0 0 20 20'
+    aria-hidden='true'
+    focusable='false'
+  >
+    <path d='M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z'></path>
+  </svg>
+);
 
-function DefaultRender() {
-  return (
-    <ButtonContainer>
-      <Button>Default</Button>
-      <Button color='secondary'>Secondary</Button>
-      <Button color='info'>Info</Button>
-      <Button color='success'>Success</Button>
-      <Button color='error'>Error</Button>
-    </ButtonContainer>
-  );
-}
-
-function ContainedRender() {
-  return (
-    <ButtonContainer>
-      <Button variant='contained'>Default</Button>
-      <Button variant='contained' color='secondary'>
-        Secondary
-      </Button>
-      <Button variant='contained' color='info'>
-        Info
-      </Button>
-      <Button variant='contained' color='success'>
-        Success
-      </Button>
-      <Button variant='contained' color='error'>
-        Error
-      </Button>
-    </ButtonContainer>
-  );
-}
-
-function OutlinedRender() {
-  return (
-    <ButtonContainer>
-      <Button variant='outlined'>Default</Button>
-      <Button variant='outlined' color='secondary'>
-        Secondary
-      </Button>
-      <Button variant='outlined' color='info'>
-        Info
-      </Button>
-      <Button variant='outlined' color='success'>
-        Success
-      </Button>
-      <Button variant='outlined' color='error'>
-        Error
-      </Button>
-    </ButtonContainer>
-  );
-}
-
-function SizesRender() {
+function WithIconsRender(args: PropsWithChildren<Story['args']>) {
+  const { children, ...otherProps } = args;
   return (
     <>
-      <ButtonContainer>
-        <Button size='small'>Small</Button>
-        <Button size='medium'>Medium</Button>
-        <Button size='large'>Large</Button>
-      </ButtonContainer>
-      <ButtonContainer>
-        <Button variant='contained' size='small'>
-          Small
+      Primary Buttons with Icons
+      <Box display='flex' gap={10} margin={6}>
+        <Button leadingSection={<DownIcon />} {...otherProps}>
+          {children}
         </Button>
-        <Button variant='contained' size='medium'>
-          Medium
+        <Button trailingSection={<DownIcon />} {...otherProps}>
+          {children}
         </Button>
-        <Button variant='contained' size='large'>
-          Large
+      </Box>
+      <br />
+      <br />
+      Outlined Buttons with Icons
+      <Box display='flex' gap={10} margin={6}>
+        <Button
+          variant='outlined'
+          leadingSection={<DownIcon />}
+          {...otherProps}
+        >
+          {children}
         </Button>
-      </ButtonContainer>
-      <ButtonContainer>
-        <Button variant='outlined' size='small'>
-          Small
+        <Button
+          variant='outlined'
+          trailingSection={<DownIcon />}
+          {...otherProps}
+        >
+          {children}
         </Button>
-        <Button variant='outlined' size='medium'>
-          Medium
-        </Button>
-        <Button variant='outlined' size='large'>
-          Large
-        </Button>
-      </ButtonContainer>
-      <ButtonContainer>
-        <Button variant='gradient' size='small'>
-          Small
-        </Button>
-        <Button variant='gradient' size='medium'>
-          Medium
-        </Button>
-        <Button variant='gradient' size='large'>
-          Large
-        </Button>
-      </ButtonContainer>
+      </Box>
+      <br />
     </>
   );
 }
 
 export const Default: Story = {
   args: {
-    children: 'Button',
+    children: 'Save and Continue',
   },
-  render: DefaultRender,
 };
 
-export const Containted: Story = {
+export const Text: Story = {
+  args: {
+    children: 'Continue to Submission',
+    variant: 'text',
+  },
+};
+
+export const Filled: Story = {
   args: {
     color: 'primary',
-    children: 'Button',
-    variant: 'contained',
+    children: 'Continue to Submission',
+    variant: 'filled',
   },
-  render: ContainedRender,
 };
 
 export const Outlined: Story = {
   args: {
-    color: 'primary',
-    children: 'Button',
-    variant: 'contained',
-  },
-  render: OutlinedRender,
-};
-
-export const WithGradient: Story = {
-  args: {
-    color: 'primary',
-    children: 'Button',
-    variant: 'gradient',
+    children: 'Cancel',
+    variant: 'outlined',
   },
 };
 
-export const Sizes: Story = {
+export const WithIcons: Story = {
   args: {
-    color: 'secondary',
     children: 'Button',
   },
-  render: SizesRender,
+  render: WithIconsRender,
 };

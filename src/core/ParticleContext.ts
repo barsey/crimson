@@ -1,13 +1,13 @@
 import { createContext } from 'react';
 import { ParticleTheme } from './theme.types';
-import { defaultTheme } from '../theming/theme';
+import { DEFAULT_THEME } from '../theming/theme';
 
 export type ContextProps = {
   theme: ParticleTheme;
 };
 
 const ParticleContext = createContext<ContextProps>({
-  theme: defaultTheme,
+  theme: DEFAULT_THEME,
 });
 
-export default ParticleContext;
+export { ParticleContext };

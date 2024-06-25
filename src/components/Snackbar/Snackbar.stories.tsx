@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { useSnackbar } from './useSnackbar';
-import React from 'react';
 import styled from '@emotion/styled';
 import { Button } from '../Button';
 
@@ -29,6 +28,7 @@ type Story = StoryObj<typeof meta>;
 const ButtonContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  gap: 8px;
 `;
 
 function DefaultRender() {
@@ -36,14 +36,13 @@ function DefaultRender() {
   return (
     <ButtonContainer>
       <Button
-        variant='contained'
+        variant='filled'
         onClick={() => enqueueSnackbar('Display Default content')}
-        disableElevation
       >
         Default
       </Button>
       <Button
-        variant='contained'
+        variant='filled'
         color='success'
         onClick={() =>
           enqueueSnackbar({
@@ -51,12 +50,11 @@ function DefaultRender() {
             message: 'Display success content',
           })
         }
-        disableElevation
       >
         Success
       </Button>
       <Button
-        variant='contained'
+        variant='filled'
         color='info'
         onClick={() =>
           enqueueSnackbar({
@@ -64,12 +62,11 @@ function DefaultRender() {
             message: 'Display success content',
           })
         }
-        disableElevation
       >
         Info
       </Button>
       <Button
-        variant='contained'
+        variant='filled'
         color='warning'
         onClick={() =>
           enqueueSnackbar({
@@ -77,12 +74,11 @@ function DefaultRender() {
             message: 'Display success content',
           })
         }
-        disableElevation
       >
         Warning
       </Button>
       <Button
-        variant='contained'
+        variant='filled'
         color='error'
         onClick={() =>
           enqueueSnackbar({
@@ -90,7 +86,6 @@ function DefaultRender() {
             message: 'Display success content',
           })
         }
-        disableElevation
       >
         Error
       </Button>

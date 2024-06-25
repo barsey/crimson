@@ -1,10 +1,11 @@
 import styled from '@emotion/styled';
-import { PropsWithChildren } from 'react';
-import { DefaultParticleProps } from '../types';
-import { useThemeSizing } from '../../core/useThemeSizing';
+import { PropsWithChildren, useId } from 'react';
+import { ParticleColor } from '../types';
 
-type TabsProps = DefaultParticleProps & {
+export type TabsProps = {
   fullWidth?: boolean;
+  color?: ParticleColor;
+  id?: string;
 };
 
 const Container = styled.div`
@@ -12,7 +13,6 @@ const Container = styled.div`
 `;
 
 const Nav = styled.div<TabsProps>`
-  //   background: #fdfdfd;
   padding: 5px 5px 0;
   border-radius: 10px;
   border-bottom-left-radius: 0;
@@ -21,8 +21,7 @@ const Nav = styled.div<TabsProps>`
   height: 44px;
   display: flex;
   width: 100%;
-  ul,
-  li {
+  ul {
     list-style: none;
     padding: 0;
     margin: 0 !important;
@@ -34,52 +33,7 @@ const Nav = styled.div<TabsProps>`
   }
 
   li {
-    border-radius: 5px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-
-    padding: 8px 16px;
-    position: relative;
-    background: white;
-    cursor: pointer;
-    height: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
     flex: ${({ fullWidth }) => (fullWidth ? 1 : 'auto')};
-    min-width: 0;
-    position: relative;
-    user-select: none;
-  }
-
-  .underline {
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 0;
-    height: 1px;
-  }
-
-  li.selected {
-    background: #eee;
-    border-bottom: ${({ theme, color }) =>
-      `3px solid ${color ? theme.colors[color] : theme.colors.primary}`};
-  }
-
-  li button {
-    width: 20px;
-    height: 20px;
-    border: 0;
-    background: #fff;
-    border-radius: 3px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    stroke: #000;
-    margin-left: 10px;
-    cursor: pointer;
-    flex-shrink: 0;
   }
 
   .background {
@@ -106,15 +60,34 @@ const Nav = styled.div<TabsProps>`
     cursor: default;
     pointer-events: none;
   }
+
+  .underline {
+    background: ${({ theme, color = 'primary' }) =>
+      theme.colors[color].main};]};
+    
+  }
 `;
 
 export function Tabs(props: PropsWithChildren<TabsProps>) {
-  const { children, fullWidth, color, size } = props;
-  const ulStyleClass = useThemeSizing({ size });
+  const { children, fullWidth, color, id } = props;
+
+  const uniqueId = useId();
+  const controlId = id || uniqueId;
+
   return (
-    <Container>
-      <Nav color={color} fullWidth={fullWidth}>
-        <ul css={ulStyleClass}>{children}</ul>
+    <Container
+      data-testid={`${controlId}-container`}
+      id={`${controlId}-container`}
+    >
+      <Nav
+        color={color}
+        fullWidth={fullWidth}
+        data-testid={`${controlId}-tab-nav`}
+        id={`${controlId}-tab-nav`}
+      >
+        <ul data-testid={`${controlId}-ul`} id={`${controlId}-ul`}>
+          {children}
+        </ul>
       </Nav>
     </Container>
   );
