@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { PropsWithChildren, isValidElement } from 'react';
-import { createPortal } from 'react-dom';
 import SnackbarContext from './SnackbarContext';
 import {
   InternalSnack,
@@ -9,8 +8,8 @@ import {
   SnackbarKey,
   SnackbarMessage,
 } from './types';
-import { SnackbarContainer } from './SnackbarContainer';
 import { Global, css } from '@emotion/react';
+import { PortalSnackbarContainer } from './PortalSnackbarContainer';
 
 const defaults = {
   maxSnack: 3,
@@ -143,7 +142,8 @@ function SnackbarProvider(
         `}
       />
       {children}
-      {createPortal(<SnackbarContainer />, document.body)}
+
+      <PortalSnackbarContainer />
     </SnackbarContext.Provider>
   );
 }

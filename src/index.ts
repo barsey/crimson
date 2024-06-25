@@ -1,3 +1,4 @@
 export * from './components';
-export * from './core/theme.types';
-export * from './core/ParticleProvider';
+export * from './theming';
+export * from './core';
+export * from './colors/types';

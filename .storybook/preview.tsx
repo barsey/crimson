@@ -1,21 +1,13 @@
 import React from 'react';
 import { Preview } from '@storybook/react';
-import ParticleProvider from '../src/core/ParticleProvider';
+import { ParticleProvider } from '../src';
 import './style.css';
-
-// export const decorators = [
-//   withThemeFromJSXProvider({
-//     themes: {
-//       light: defaultTheme,
-//     },
-//     defaultTheme: 'light',
-//     Provider: ThemeProvider,
-//   }),
-// ];
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 const preview: Preview = {
   parameters: {
-    actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -23,6 +15,7 @@ const preview: Preview = {
       },
     },
   },
+
   decorators: [
     (Story) => (
       <ParticleProvider>
@@ -31,6 +24,8 @@ const preview: Preview = {
       </ParticleProvider>
     ),
   ],
+
+  tags: ['autodocs'],
 };
 
 export default preview;

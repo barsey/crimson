@@ -5,6 +5,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Snackbar from './Snackbar';
 import { CloseIcon } from '../Icons/CloseIcon';
 import { Alert } from '../Alert/Alert';
+import { ParticleFeedbackColor } from '../types';
+import { ZIndex } from '../constants';
 
 const SnackbarContent = styled.div`
   padding: 0;
@@ -15,14 +17,14 @@ const SnackbarContent = styled.div`
   display: flex;
   align-items: flex-start;
   flex-direction: column-reverse;
-  z-index: 1400;
+  z-index: ${ZIndex.SnackBar};
 
   button {
     outline: none;
     -webkit-appearance: none;
     cursor: pointer;
     display: flex;
-    padding: 8px 0;
+
     align-items: center;
   }
 
@@ -38,32 +40,56 @@ const SnackbarContent = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 8px 0;
   }
+`;
 
-  button.close {
-    position: absolute;
-    top: 15px;
-    right: 10px;
-    background: inherit;
+const StyledAlert = styled(Alert)<{
+  severity?: ParticleFeedbackColor;
+}>`
+  &.default {
+    background-color: ${({ theme }) => theme.colors.info[900]};
     border: none;
-    padding: 0;
-    svg {
-      width: 1rem;
-      height: 1rem;
-      fill: #ccc;
-      &:hover {
-        fill: #fff;
-      }
+    color: ${({ theme }) => theme.colors.neutral[0]};
+  }
+`;
+
+const SnackbarItem = motion(StyledAlert);
+
+const CloseIconButton = styled.button<{ severity?: ParticleFeedbackColor }>`
+  align-items: center;
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  background: inherit;
+  border: none;
+  padding: 0;
+  svg {
+    width: 1rem;
+    height: 1rem;
+    padding: 0rem 0.1875rem;
+    fill: ${({ theme }) => theme.colors.grey[600]};
+    &:hover {
+      fill: ${({ theme, severity }) =>
+        severity ? theme.colors.grey[700] : theme.colors.neutral[0]};
     }
   }
 `;
 
-const SnackbarItem = motion(Alert);
-
-const CloseButton = ({ close }: { close: () => void }) => (
-  <button onClick={close} className='close'>
+const CloseButton = ({
+  close,
+  severity,
+}: {
+  close: () => void;
+  severity?: ParticleFeedbackColor;
+}) => (
+  <CloseIconButton
+    data-testid='snackbar-close-button'
+    severity={severity}
+    onClick={close}
+  >
     <CloseIcon />
-  </button>
+  </CloseIconButton>
 );
 
 export function SnackbarContainer() {
@@ -84,7 +110,9 @@ export function SnackbarContainer() {
               x: 300,
             }}
             severity={item.variant}
-            fallbackColor='#fff'
+            hideIcon
+            shadow
+            className={item.variant ?? 'default'}
           >
             <Snackbar
               id={item.id}
@@ -93,7 +121,10 @@ export function SnackbarContainer() {
             >
               <div className='content'>
                 <div className='message'>{item.message}</div>
-                <CloseButton close={() => closeSnackbar(item.id)} />
+                <CloseButton
+                  severity={item.variant}
+                  close={() => closeSnackbar(item.id)}
+                />
               </div>
             </Snackbar>
           </SnackbarItem>

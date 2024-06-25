@@ -34,9 +34,10 @@ const PopoverContentElement = styled.div`
   max-width: calc(100vw - 10px);
 `;
 
-interface PopoverOptions {
+export type PopoverPlacement = Placement;
+export interface PopoverOptions {
   initialOpen?: boolean;
-  placement?: Placement;
+  placement?: PopoverPlacement;
   modal?: boolean;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -138,7 +139,7 @@ export function Popover({
   );
 }
 
-interface PopoverTriggerProps extends DefaultParticleProps {
+export interface PopoverTriggerProps extends DefaultParticleProps {
   children: React.ReactNode;
   asChild?: boolean;
 }
@@ -166,8 +167,7 @@ export const PopoverTrigger = React.forwardRef<
 
   return (
     <Button
-      disableElevation
-      variant='contained'
+      variant='filled'
       ref={ref}
       // The user can style the trigger based on the state
       data-state={context.open ? 'open' : 'closed'}

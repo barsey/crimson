@@ -8,7 +8,7 @@ import {
   PopoverHeading,
   PopoverTrigger,
 } from './Popover';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from '../Button';
 
 const meta: Meta<typeof Popover> = {
@@ -29,7 +29,7 @@ const meta: Meta<typeof Popover> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-function Render(args) {
+function Render(args: Story['args']) {
   const [open, setOpen] = useState(false);
   return (
     <div>
@@ -48,16 +48,15 @@ function Render(args) {
   );
 }
 
-function CustomTriggerRender(args) {
+function CustomTriggerRender(args: Story['args']) {
   const [open, setOpen] = useState(false);
+
   return (
     <div>
       <h1>Popover Example</h1>
       <Popover {...args} open={open} onOpenChange={setOpen}>
         <PopoverTrigger onClick={() => setOpen((v) => !v)} asChild>
-          <Button variant='outlined' disableElevation>
-            Custom Trigger
-          </Button>
+          <Button variant='outlined'>Custom Trigger</Button>
         </PopoverTrigger>
         <PopoverContent>
           <PopoverHeading>My popover heading</PopoverHeading>

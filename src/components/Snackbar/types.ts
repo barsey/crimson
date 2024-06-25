@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ParticleColor } from '../types';
+import { ParticleFeedbackColor } from '../types';
 
 export type RequiredBy<T, K extends keyof T> = Omit<T, K> &
   Required<Pick<T, K>>;
@@ -25,8 +25,8 @@ type MarkInvalidVariantAsNever<T> = {
   [Key in keyof T]: T[Key] extends true
     ? T[Key]
     : T[Key] extends Record<string, unknown>
-    ? T[Key]
-    : never;
+      ? T[Key]
+      : never;
 };
 
 type GetWhitelistedVariants<V extends string, U> = OmitNever<
@@ -35,7 +35,10 @@ type GetWhitelistedVariants<V extends string, U> = OmitNever<
 
 interface VariantOverrides {}
 
-type VariantMap = GetWhitelistedVariants<ParticleColor, VariantOverrides>;
+type VariantMap = GetWhitelistedVariants<
+  ParticleFeedbackColor,
+  VariantOverrides
+>;
 
 export type VariantType = keyof VariantMap;
 
@@ -135,7 +138,7 @@ export interface InternalSnack
   > {
   id: SnackbarKey;
   message?: SnackbarMessage;
-  iconVariant: Record<string, React.ReactNode>;
+  iconVariant?: Record<string, React.ReactNode>;
 }
 
 export type SnackbarContextProps = {
@@ -144,6 +147,6 @@ export type SnackbarContextProps = {
     messageOrOptions:
       | SnackbarMessage
       | (OptionsObject & { message?: SnackbarMessage }),
-  ) => void;
+  ) => SnackbarKey;
   closeSnackbar: (key: SnackbarKey) => void;
 };

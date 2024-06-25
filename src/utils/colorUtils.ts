@@ -1,47 +1,98 @@
-import { ButtonVariants, ParticleColor } from '../components/types';
-import { ParticleTheme } from '../core/theme.types';
+import { ColorType } from 'src/colors/types';
+import { DefaultTokenTypeVariant } from 'src/core';
 
-export const contrastThreshold = 4.5;
+export const contrastThreshold = 3;
+// Convert hex color to RGB array
+function hexToRgb(hex: string): number[] {
+  let r = 0,
+    g = 0,
+    b = 0;
 
-function hexToRgb(hex: string) {
-  const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-  hex = hex.replace(shorthandRegex, function (m, r, g, b) {
-    return r + r + g + g + b + b;
-  });
-
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result
-    ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16),
-      }
-    : null;
-}
-
-function luminance(r: number, g: number, b: number) {
-  const a = [r, g, b].map(function (v) {
-    v /= 255;
-    return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
-  });
-  return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
-}
-
-export function getContrastRatio(foreground: string, background: string) {
-  const color1rgb = hexToRgb(foreground);
-  const color2rgb = hexToRgb(background);
-
-  if (!color1rgb || !color2rgb) {
-    return 0;
+  // 3 digits
+  if (hex.length === 4) {
+    r = parseInt(hex[1] + hex[1], 16);
+    g = parseInt(hex[2] + hex[2], 16);
+    b = parseInt(hex[3] + hex[3], 16);
+  }
+  // 6 digits
+  else if (hex.length === 7) {
+    r = parseInt(hex[1] + hex[2], 16);
+    g = parseInt(hex[3] + hex[4], 16);
+    b = parseInt(hex[5] + hex[6], 16);
+  } else {
+    r = parseInt(hex.substring(1, 3), 16);
+    g = parseInt(hex.substring(3, 5), 16);
+    b = parseInt(hex.substring(5, 7), 16);
   }
 
-  const color1luminance = luminance(color1rgb.r, color1rgb.g, color1rgb.b);
-  const color2luminance = luminance(color2rgb.r, color2rgb.g, color2rgb.b);
+  return [r, g, b];
+}
 
+// Utility to convert RGB to hex
+export const rgbToHex = (r: number, g: number, b: number): string => {
   return (
-    (Math.max(color1luminance, color2luminance) + 0.05) /
-    (Math.min(color1luminance, color2luminance) + 0.05)
+    '#' +
+    ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()
   );
+};
+
+// Adjust color brightness
+export const adjustBrightness = (color: string, amount: number): string => {
+  const rgbColor = hexToRgb(color)!;
+  // Calculate adjustment
+  const adjust = (color: number) => Math.max(Math.min(255, color + amount), 0);
+  return rgbToHex(
+    adjust(rgbColor[0]),
+    adjust(rgbColor[1]),
+    adjust(rgbColor[2]),
+  );
+};
+
+// Generate color shades
+export const generateColorShades = (
+  color: string,
+): ColorType & DefaultTokenTypeVariant => {
+  // Assume the user passed color is for the 500 variant
+  return {
+    50: adjustBrightness(color, 200),
+    100: adjustBrightness(color, 150),
+    200: adjustBrightness(color, 100),
+    300: adjustBrightness(color, 50),
+    400: adjustBrightness(color, 25),
+    500: color, // Original color
+    600: adjustBrightness(color, -25),
+    700: adjustBrightness(color, -50),
+    800: adjustBrightness(color, -100),
+    900: adjustBrightness(color, -150),
+    main: color,
+  };
+};
+
+export function getContrastRatio(color1: string, color2: string): number {
+  // Helper function to calculate relative luminance
+  function getRelativeLuminance(color: number[]): number {
+    const rgb = color.map((value) => {
+      value /= 255; // Normalize to 0-1 range
+      value =
+        value <= 0.03928
+          ? value / 12.92
+          : Math.pow((value + 0.055) / 1.055, 2.4);
+      return value;
+    });
+    return 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
+  }
+
+  const rgb1 = hexToRgb(color1);
+  const rgb2 = hexToRgb(color2);
+
+  const luminance1 = getRelativeLuminance(rgb1);
+  const luminance2 = getRelativeLuminance(rgb2);
+
+  const contrastRatio =
+    (Math.max(luminance1, luminance2) + 0.05) /
+    (Math.min(luminance1, luminance2) + 0.05);
+
+  return parseFloat(contrastRatio.toFixed(2));
 }
 
 export function getContrastText(background: string) {
@@ -53,7 +104,7 @@ export function getContrastText(background: string) {
     if (contrast < 3) {
       console.error(
         [
-          `MUI: The contrast ratio of ${contrast}:1 for ${contrastText} on ${background}`,
+          `The contrast ratio of ${contrast}:1 for ${contrastText} on ${background}`,
           'falls below the WCAG recommended absolute minimum contrast ratio of 3:1.',
           'https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast',
         ].join('\n'),
@@ -62,55 +113,4 @@ export function getContrastText(background: string) {
   }
 
   return contrastText;
-}
-
-export function getButtonBackground(
-  theme: ParticleTheme,
-  color?: ParticleColor,
-  variant?: ButtonVariants,
-) {
-  switch (variant) {
-    case 'default':
-      return 'inherit';
-
-    case 'outlined':
-      return 'inherit';
-
-    case 'contained':
-      return color ? theme.colors[color] : theme.colors.primary;
-
-    case 'gradient':
-      return `linear-gradient(250deg, ${theme.colors.primary}, ${theme.colors.secondary})`;
-    default:
-      return '#fff';
-  }
-}
-
-export function getButtonColor(
-  theme: ParticleTheme,
-  color?: ParticleColor,
-  variant?: ButtonVariants,
-) {
-  const defaultColor = color ? theme.colors[color] : theme.colors.primary;
-  switch (variant) {
-    case 'contained':
-    case 'gradient':
-      return color ? getContrastText(theme.colors[color]) : '#fff';
-    default:
-      return defaultColor;
-  }
-}
-
-export function getButtonBorder(
-  theme: ParticleTheme,
-  color?: ParticleColor,
-  variant?: ButtonVariants,
-) {
-  const defaultColor = color ? theme.colors[color] : theme.colors.primary;
-  switch (variant) {
-    case 'outlined':
-      return `1px solid ${defaultColor}`;
-    default:
-      return '0';
-  }
 }

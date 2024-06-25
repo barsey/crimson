@@ -1,46 +1,41 @@
-import { useMergeRefs, FloatingPortal } from '@floating-ui/react';
+import { Placement } from '@floating-ui/react';
 
-import React, { forwardRef } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { useTooltip, TooltipOptions } from './useTooltip';
-import styled from '@emotion/styled';
 
-const TooltipContentContainer = styled.div`
-  background-color: #444;
-  color: white;
-  font-size: 90%;
-  padding: 4px 8px;
-  border-radius: 4px;
-  box-sizing: border-box;
-  width: max-content;
-  max-width: calc(100vw - 10px);
-`;
-
-type ContextType = ReturnType<typeof useTooltip> | null;
-
-const TooltipContext = React.createContext<ContextType>(null);
-
-export const useTooltipContext = () => {
-  const context = React.useContext(TooltipContext);
-
-  if (context == null) {
-    throw new Error('Tooltip components must be wrapped in <Tooltip />');
-  }
-
-  return context;
-};
+import { TooltipContent } from './TooltipContent';
+import { TooltipTrigger } from './TooltipTrigger';
+import { TooltipContext } from './TooltipContext';
 
 export function Tooltip({
-  title,
+  message,
+  caption,
   children,
-  ...options
-}: {
-  children: React.ReactNode;
-  title: string;
-} & TooltipOptions) {
+  placement,
+  id = 'tooltip',
+}: PropsWithChildren<{
+  message: string;
+  caption?: string;
+  placement?: Placement;
+  id?: string;
+}>) {
   return (
-    <BaseTooltip {...options}>
-      <TooltipTrigger asChild>{children}</TooltipTrigger>
-      <TooltipContent>{title}</TooltipContent>
+    <BaseTooltip placement={placement}>
+      <TooltipTrigger id={`${id}-trigger`} asChild>
+        {children}
+      </TooltipTrigger>
+      <TooltipContent id={`${id}-content`} data-testid={`${id}-content`}>
+        {caption && (
+          <span
+            className='caption'
+            id={`${id}-content-caption`}
+            data-testid={`${id}-content-caption`}
+          >
+            {caption}
+          </span>
+        )}
+        {message}
+      </TooltipContent>
     </BaseTooltip>
   );
 }
@@ -58,59 +53,3 @@ function BaseTooltip({
     </TooltipContext.Provider>
   );
 }
-
-const TooltipTrigger = forwardRef<
-  HTMLElement,
-  React.HTMLProps<HTMLElement> & { asChild?: boolean }
->(function TooltipTrigger({ children, asChild = false, ...props }, propRef) {
-  const context = useTooltipContext();
-  const childrenRef = (children as any).ref; // eslint-disable-line
-  const ref = useMergeRefs([context.refs.setReference, propRef, childrenRef]);
-
-  // `asChild` allows the user to pass any element as the anchor
-  if (asChild && React.isValidElement(children)) {
-    return React.cloneElement(
-      children,
-      context.getReferenceProps({
-        ref,
-        ...props,
-        ...children.props,
-        'data-state': context.open ? 'open' : 'closed',
-      }),
-    );
-  }
-
-  return (
-    <button
-      ref={ref}
-      // The user can style the trigger based on the state
-      data-state={context.open ? 'open' : 'closed'}
-      {...context.getReferenceProps(props)}
-    >
-      {children}
-    </button>
-  );
-});
-
-const TooltipContent = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLProps<HTMLDivElement>
->(function TooltipContent({ style, ...props }, propRef) {
-  const context = useTooltipContext();
-  const ref = useMergeRefs([context.refs.setFloating, propRef]);
-
-  if (!context.open) return null;
-
-  return (
-    <FloatingPortal>
-      <TooltipContentContainer
-        ref={ref}
-        style={{
-          ...context.floatingStyles,
-          ...style,
-        }}
-        {...context.getFloatingProps(props)}
-      />
-    </FloatingPortal>
-  );
-});
