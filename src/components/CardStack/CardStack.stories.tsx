@@ -38,28 +38,28 @@ function AccordionChild({
   return (
     <Accordion>
       <AccordionItem
-        title='E11.51'
-        subTitle='Type 2 diabetes mellitus with diabetic peripheral angiopathy without gangrene'
+        title='Title 1'
+        subTitle='Sub-title1 text can be put here'
         active={indexes[0] === activeIndex}
         onToggle={() => onClick && onClick(indexes[0])}
         defaultExpanded={indexes[0] === activeIndex}
-        titleFooter='Reconfirmation'
+        titleFooter='Footer text1'
         leadingExpandSection={
           <Chip variant='success' size='small'>
-            Accepted
+            Success
           </Chip>
         }
       >
         <Box display='flex' alignItems='center' flexWrap='wrap' gap={4}>
-          <Chip size='small'>Accept</Chip>
-          <Chip size='small'>Accept & Document in Progress Note</Chip>
-          <Chip size='small'>Reject</Chip>
+          <Chip size='small'>Option 1</Chip>
+          <Chip size='small'>Option 2</Chip>
+          <Chip size='small'>Option 3</Chip>
         </Box>
       </AccordionItem>
       <AccordionItem
-        title='E11.65'
-        subTitle='Type 2 diabetes mellitus with hyperglycemia'
-        titleFooter='Reconfirmation'
+        title='Title 2'
+        subTitle='Sub-title2 text can be put here'
+        titleFooter='Footer text2'
         active={indexes[1] === activeIndex}
         onToggle={() => onClick && onClick(indexes[1])}
         defaultExpanded={indexes[1] === activeIndex}
@@ -67,9 +67,9 @@ function AccordionChild({
         <Box padding={12}>This is the content of the second section</Box>
       </AccordionItem>
       <AccordionItem
-        title='E11.59'
-        subTitle='Type 2 diabetes mellitus with other circulatory complications'
-        titleFooter='Clinical Inference'
+        title='Title 3'
+        subTitle='Sub-title3 text can be put here'
+        titleFooter='Footer text3'
         active={indexes[2] === activeIndex}
         onToggle={() => onClick && onClick(indexes[2])}
         defaultExpanded={indexes[2] === activeIndex}
@@ -87,7 +87,7 @@ function MultipleRender(args: Story['args']) {
       <CardStack
         totalItems={3}
         {...args}
-        title='Diabetes'
+        title='Group Header Title 1'
         onToggle={(collapsed) =>
           !collapsed && ![0, 1, 2].includes(activeIndex) && setActiveIndex(0)
         }
@@ -103,7 +103,7 @@ function MultipleRender(args: Story['args']) {
       <CardStack
         totalItems={3}
         {...args}
-        title='Major Depressive Disorder'
+        title='Group Header Title 2'
         onToggle={(collapsed) =>
           !collapsed && ![3, 4, 5].includes(activeIndex) && setActiveIndex(3)
         }
@@ -117,22 +117,22 @@ function MultipleRender(args: Story['args']) {
       </CardStack>
       <Accordion>
         <AccordionItem
-          title='I42.0'
-          subTitle='Dilated cardiomyopathy'
+          title='Another Title1'
+          subTitle='Subtitle1 text goes here...'
           active={6 === activeIndex}
           onToggle={() => setActiveIndex(6)}
-          titleFooter='Clinical Inference'
+          titleFooter='Footer text'
         >
           <Box display='flex' alignItems='center' flexWrap='wrap' gap={4}>
-            <Chip size='small'>Accept</Chip>
-            <Chip size='small'>Accept & Document in Progress Note</Chip>
-            <Chip size='small'>Reject</Chip>
+            <Chip size='small'>Option A</Chip>
+            <Chip size='small'>Option B</Chip>
+            <Chip size='small'>Option C</Chip>
           </Box>
         </AccordionItem>
         <AccordionItem
-          title='I10'
-          subTitle='Essential (primary) hypertension'
-          titleFooter='Clinical Inference'
+          title='Another Title2'
+          subTitle='Subtitle2 text goes here...'
+          titleFooter='Footer'
           active={7 === activeIndex}
           onToggle={() => setActiveIndex(7)}
         >
@@ -145,7 +145,7 @@ function MultipleRender(args: Story['args']) {
 
 export const Default: Story = {
   args: {
-    title: 'Diabetes',
+    title: 'Group Header Title',
     totalItems: 3,
     children: <AccordionChild indexes={[0, 1, 2]} />,
   },
@@ -153,7 +153,7 @@ export const Default: Story = {
 
 export const MultipleItems: Story = {
   args: {
-    title: 'Diabetes',
+    title: 'Group Header Title',
     totalItems: 3,
   },
   render: MultipleRender,

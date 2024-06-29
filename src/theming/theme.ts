@@ -7,8 +7,8 @@ import {
   yellow,
   grey,
   neutral,
-  indigo,
-  grape,
+  electricBlue,
+  violet,
 } from '../colors';
 import {
   borderRadius,
@@ -41,8 +41,8 @@ export const DEFAULT_THEME: ParticleTheme = {
   },
 
   colors: {
-    primary: { ...indigo, main: indigo[500] },
-    secondary: { ...grape, main: grape[500] },
+    primary: { ...electricBlue, main: electricBlue[500] },
+    secondary: { ...violet, main: violet[500] },
     error: { ...red, main: red[500] },
     warning: { ...yellow, main: yellow[500] },
     info: { ...blue, main: blue[500] },

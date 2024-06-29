@@ -127,7 +127,7 @@ function CustomTitlesRadioDisplay(args: Story['args']) {
           titleComponent={
             <Radio
               option={{
-                label: 'Reject Cardiomyopathy',
+                label: 'Reject Option 1',
                 value: 'reject-cardio',
               }}
               selectedValue={selectedValue}
@@ -145,7 +145,7 @@ function CustomTitlesRadioDisplay(args: Story['args']) {
           titleComponent={
             <Radio
               option={{
-                label: 'I42.0 — Dialated cardiomyopathy',
+                label: 'Reject Option 2',
                 value: 'dialated',
               }}
               selectedValue={selectedValue}
@@ -163,7 +163,7 @@ function CustomTitlesRadioDisplay(args: Story['args']) {
           titleComponent={
             <Radio
               option={{
-                label: 'I42.1 — Obstructive hypertrophic cadiomyopathy',
+                label: 'Reject Option 3',
                 value: 'obstructive',
               }}
               selectedValue={selectedValue}
@@ -182,7 +182,7 @@ function CustomTitlesRadioDisplay(args: Story['args']) {
           titleComponent={
             <Radio
               option={{
-                label: 'I42.9 — Cardiomyopathy, unspecified',
+                label: 'Reject Option 4',
                 value: 'unspecified',
               }}
               selectedValue={selectedValue}
@@ -219,7 +219,7 @@ function CustomTitlesCheckboxDisplay(args: Story['args']) {
         <AccordionItem
           titleComponent={
             <Checkbox
-              label='I97.3	— Postprocedural hypertension'
+              label='AAA	— This could be some text'
               name='hypertension'
               onChange={(value) => handleChange('hypertension', value)}
               checked={selectedValue['hypertension']}
@@ -234,7 +234,7 @@ function CustomTitlesCheckboxDisplay(args: Story['args']) {
         <AccordionItem
           titleComponent={
             <Checkbox
-              label='None, reject all codes'
+              label='None, reject all options'
               name='rejactall'
               onChange={(value) => handleChange('rejactall', value)}
               checked={selectedValue['rejactall']}
@@ -294,41 +294,41 @@ function WithErrorAccordion(args: Story['args']) {
   return (
     <Accordion {...args}>
       <AccordionItem
-        title='E11.51'
-        subTitle='Type 2 diabetes mellitus with diabetic peripheral angiopathy without gangrene'
-        titleFooter='Reconfirmation'
+        title='Title 1'
+        subTitle='Subtitle1 text goes here which can be a long text as well'
+        titleFooter='Footer'
         leadingExpandSection={
           <Chip variant='warning' size='small'>
-            Incomplete
+            Draft
           </Chip>
         }
         errorText='Last update failed. Please try again.'
       >
         <Box display='flex' alignItems='center' flexWrap='wrap' gap={4}>
-          <Chip size='small'>Accept</Chip>
-          <Chip size='small'>Accept & Document in Progress Note</Chip>
-          <Chip size='small'>Reject</Chip>
+          <Chip size='small'>Option 1</Chip>
+          <Chip size='small'>Option 2</Chip>
+          <Chip size='small'>Option 3</Chip>
         </Box>
       </AccordionItem>
       <AccordionItem
-        title='E11.65'
-        subTitle='Type 2 diabetes mellitus with hyperglycemia'
-        titleFooter='Reconfirmation'
+        title='Title 2'
+        subTitle='Subtitle2 text goes here which can be a long text as well'
+        titleFooter='Footer'
         leadingExpandSection={
           <Chip variant='error' size='small'>
-            Rejected
+            Failed
           </Chip>
         }
       >
         <Box padding={12}>This is the content of the second section</Box>
       </AccordionItem>
       <AccordionItem
-        title='E11.59'
-        subTitle='Type 2 diabetes mellitus with other circulatory complications'
-        titleFooter='Clinical Inference'
+        title='Title 3'
+        subTitle='Subtitle3 text goes here which can be a long text as well'
+        titleFooter='Footer'
         leadingExpandSection={
           <Chip variant='error' size='small'>
-            Rejected
+            Failed
           </Chip>
         }
       >
