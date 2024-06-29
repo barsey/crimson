@@ -1,3 +1,10 @@
+# [0.6.0](https://github.com/ynetic/particle/compare/v0.5.0...v0.6.0) (2024-06-29)
+
+
+### Features
+
+* change the theme colors ([#23](https://github.com/ynetic/particle/issues/23)) ([910b3e0](https://github.com/ynetic/particle/commit/910b3e01c2bc77a9305c766ec5bd4b27df18f973))
+
 # [0.5.0](https://github.com/ynetic/particle/compare/v0.4.1...v0.5.0) (2024-06-25)
 
 
