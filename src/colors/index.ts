@@ -8,3 +8,5 @@ export { default as teal } from './teal';
 export { default as yellow } from './yellow';
 export { default as grape } from './grape';
 export { default as indigo } from './indigo';
+export { default as electricBlue } from './electricBlue';
+export { default as violet } from './violet';
