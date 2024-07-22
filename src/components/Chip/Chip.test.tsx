@@ -24,7 +24,7 @@ describe('Chip', () => {
     expect(defaultProps.onClick).toHaveBeenCalled();
   });
 
-  it('renders the chip with selected style when selected prop is true', () => {
+  it('renders the chip with interactive variant when selected prop is true', () => {
     const { getByText } = render(
       <Chip {...defaultProps} selected variant='interactive'>
         {content}
@@ -32,7 +32,19 @@ describe('Chip', () => {
     );
     const chipElement = getByText('Test Chip');
     expect(chipElement).toHaveStyle(
-      `background-color: ${DEFAULT_THEME.colors.primary[50]}`,
+      `background-color: ${DEFAULT_THEME.colors.primary[100]}`,
+    );
+  });
+
+  it('renders the chip with interactive variant when selected prop is false', () => {
+    const { getByText } = render(
+      <Chip {...defaultProps} variant='interactive'>
+        {content}
+      </Chip>,
+    );
+    const chipElement = getByText('Test Chip');
+    expect(chipElement).toHaveStyle(
+      `background-color: ${DEFAULT_THEME.colors.grey[100]}`,
     );
   });
 

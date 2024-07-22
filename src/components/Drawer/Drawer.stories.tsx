@@ -92,9 +92,15 @@ export const Default: Story = {
   args: {
     children: 'This is the alert message',
     title: 'Drawer Title',
+    titleFooter: 'Footer section',
     position: 'left',
     onClose: () => {
       console.log('Close Drawer');
+    },
+    actionLabel: 'Save',
+    actionSize: 'large',
+    onAction: () => {
+      console.log('Save');
     },
   },
   render: DefaultRender,

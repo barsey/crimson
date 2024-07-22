@@ -21,7 +21,10 @@ const ChipContainer = styled.button<Omit<ChipProps, 'onClick'>>`
   font-weight: ${({ theme }) => theme.font.weight.medium};
   font-style: normal;
   line-height: normal;
-  color: ${({ theme }) => theme.colors.grey[900]};
+  color: ${({ theme, variant = 'default', selected = false }) =>
+    variant === 'interactive' && selected
+      ? theme.colors.primary[900]
+      : theme.colors.grey[900]};
   height: ${({ size = 'medium' }) => ParticleHeights[size]}px;
   display: inline-flex;
   padding: 4px 8px;
@@ -42,7 +45,7 @@ const ChipContainer = styled.button<Omit<ChipProps, 'onClick'>>`
   background-color: ${({ theme, variant = 'default', selected = false }) =>
     variant === 'interactive'
       ? selected
-        ? theme.colors.primary[50]
+        ? theme.colors.primary[200]
         : theme.colors.grey[50]
       : variant === 'default'
         ? theme.colors.grey[300]
@@ -50,12 +53,21 @@ const ChipContainer = styled.button<Omit<ChipProps, 'onClick'>>`
 
   &[data-variant='interactive'] {
     padding: 8px 12px;
-    &:hover {
+    &:hover,
+    &:active {
       &:not(:disabled) {
         cursor: ${({ readOnly }) => (readOnly ? 'default' : 'pointer')};
+        border-color: ${({ theme, selected = false }) =>
+          selected ? theme.colors.primary[600] : theme.colors.grey[700]};
       }
       &:disabled {
         cursor: not-allowed;
+      }
+    }
+    &:active {
+      &:not(:disabled) {
+        background-color: ${({ theme, selected = false }) =>
+          selected ? theme.colors.primary[100] : theme.colors.grey[100]};
       }
     }
     &:focus {

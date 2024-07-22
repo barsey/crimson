@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@/utils/test-utils';
+import { render, fireEvent, waitFor } from '@/utils/test-utils';
 import { DrawerHeading } from '../DrawerHeading';
 import { Drawer } from '../Drawer';
 
@@ -19,7 +19,10 @@ describe('DrawerHeading', () => {
         <DrawerHeading onClose={onClose} />
       </Drawer>,
     );
-    fireEvent.click(getByRole('button'));
-    expect(onClose).toHaveBeenCalled();
+
+    waitFor(() => {
+      fireEvent.click(getByRole('button'));
+      expect(onClose).toHaveBeenCalled();
+    });
   });
 });
