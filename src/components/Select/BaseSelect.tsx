@@ -576,7 +576,7 @@ const BaseSelect: React.FC<BaseSelectProps> = (props: BaseSelectProps) => {
           </SelectIndicator>
         </SelectIndicators>
       </SelectControl>
-      <HelperText>{errorText}</HelperText>
+      {errorText && <HelperText>{errorText}</HelperText>}
     </SelectContainer>
   );
 };

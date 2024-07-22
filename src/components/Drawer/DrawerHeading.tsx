@@ -20,19 +20,24 @@ const Container = styled.div`
 `;
 
 import React from 'react';
-import { Typography } from '../Typography';
+
 import { useModalContext } from '../Modals/useModalContext';
 import { HeaderCloseButton } from '../Button/HeaderCloseButton';
+import { Box } from '../Box';
 
 type DrawerHeadingProps = {
   onClose?: () => void;
   id?: string;
+  footer?: React.ReactNode;
 };
 
 export const DrawerHeading = React.forwardRef<
   HTMLHeadingElement,
   DrawerHeadingProps & React.HTMLProps<HTMLHeadingElement>
->(function ModalHeading({ children, id = 'drawer-heading', onClose }, ref) {
+>(function ModalHeading(
+  { children, id = 'drawer-heading', onClose, footer },
+  ref,
+) {
   const { setLabelId, setOpen } = useModalContext();
 
   // Only sets `aria-labelledby` on the Modal root element
@@ -49,11 +54,13 @@ export const DrawerHeading = React.forwardRef<
 
   return (
     <Container ref={ref} id={`${id}-container`} data-testid={`${id}-container`}>
-      {children && (
-        <Typography as='h4' id={`${id}-title`} data-testid={`${id}-title`}>
+      <Box display='flex' flexDirection='column' justifyContent='flex-start'>
+        <Box fontWeight={700} fontSize={20} id={`${id}-title`}>
           {children}
-        </Typography>
-      )}
+        </Box>
+        {footer}
+      </Box>
+
       {onClose && (
         <HeaderCloseButton
           type='button'

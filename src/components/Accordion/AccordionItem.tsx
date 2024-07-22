@@ -17,7 +17,7 @@ import { HelperText } from '../HelperText';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 
 const Header = styled.div`
-  padding: 12px;
+  padding: 16px;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -42,7 +42,9 @@ const Header = styled.div`
 
   &.disableToggle {
     cursor: default;
-    background: inherit;
+    &:hover {
+      background: inherit;
+    }
   }
 `;
 
@@ -53,7 +55,8 @@ const StyledContentContainer = styled.div`
 const ContentContainer = motion(StyledContentContainer);
 
 const Content = styled.div`
-  padding: 10px;
+  padding: 16px;
+  padding-top: 2px;
 `;
 
 const AccordionItemContainer = styled.div`
@@ -71,6 +74,12 @@ const AccordionItemContainer = styled.div`
     &:last-child {
       border-bottom-width: 1px;
     }
+  }
+
+  &.hideVerticalBorder {
+    border-left-width: 0;
+    border-right-width: 0;
+    border-radius: 0;
   }
 `;
 
@@ -123,6 +132,7 @@ export type AccordionItemProps = {
   defaultExpanded?: boolean;
   className?: string;
   style?: React.CSSProperties;
+  headerStyle?: React.CSSProperties;
   expandSection?: React.ReactNode;
   titleComponent?: React.ReactNode;
   reverse?: boolean;
@@ -134,6 +144,7 @@ export type AccordionItemProps = {
   trailingExpandSection?: React.ReactNode;
   disableToggle?: boolean;
   errorText?: string;
+  hideVerticalBorder?: boolean;
 };
 
 const AccordionItem = forwardRef(function AccordionItem(
@@ -156,6 +167,8 @@ const AccordionItem = forwardRef(function AccordionItem(
     trailingExpandSection,
     disableToggle,
     errorText,
+    hideVerticalBorder,
+    headerStyle,
     ...otherProps
   } = props;
 
@@ -180,7 +193,8 @@ const AccordionItem = forwardRef(function AccordionItem(
       data-has-spacing={!!spacing}
       id={`${id}-container`}
       data-testid={`${id}-container`}
-      className={clsx({ active })}
+      className={clsx({ active, hideVerticalBorder })}
+      aria-disabled={disableToggle}
       {...otherProps}
     >
       <Header
@@ -189,6 +203,7 @@ const AccordionItem = forwardRef(function AccordionItem(
         className={clsx({ reverse, disableToggle })}
         id={`${id}-header`}
         data-testid={`${id}-header`}
+        style={headerStyle}
       >
         <TitleContainer
           id={`${id}-header-title-container`}

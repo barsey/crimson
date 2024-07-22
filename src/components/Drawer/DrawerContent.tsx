@@ -24,7 +24,7 @@ export const DrawerSizeMap = {
   small: '380px',
   medium: '440px',
   large: '620px',
-  fullWidth: '95%',
+  fullWidth: '96%',
 };
 type DrawerContentProps = {
   size?: DrawerSize;
@@ -40,7 +40,7 @@ const Container = styled.div<DrawerContentProps>`
   align-items: flex-start;
   max-width: 100%;
   max-height: 100%;
-  overflow-y: auto;
+  overflow-y: hidden;
   position: fixed;
   margin: 0;
   border-radius: 0;
@@ -56,11 +56,15 @@ const Container = styled.div<DrawerContentProps>`
   &.left {
     left: 0;
     border-right: 1px solid ${({ theme }) => theme.colors.grey[500]};
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
 
   &.right {
     right: 0;
     border-left: 1px solid ${({ theme }) => theme.colors.grey[500]};
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
   }
 
   &.top,
@@ -73,11 +77,15 @@ const Container = styled.div<DrawerContentProps>`
   &.top {
     top: 0;
     border-bottom: 1px solid ${({ theme }) => theme.colors.grey[500]};
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
 
   &.bottom {
     bottom: 0;
     border-top: 1px solid ${({ theme }) => theme.colors.grey[500]};
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
   }
 `;
 const drawerLeftVariants = {
