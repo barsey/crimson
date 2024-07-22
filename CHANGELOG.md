@@ -1,3 +1,10 @@
+# [0.7.0](https://github.com/ynetic/particle/compare/v0.6.0...v0.7.0) (2024-07-22)
+
+
+### Features
+
+* update Accordion, Chip, RadioGroup, BaseSelect and Drawer components ([#24](https://github.com/ynetic/particle/issues/24)) ([a02ce7a](https://github.com/ynetic/particle/commit/a02ce7ac52d3e2dd92aaf516a8f3c90a2b45946a))
+
 # [0.6.0](https://github.com/ynetic/particle/compare/v0.5.0...v0.6.0) (2024-06-29)
 
 
