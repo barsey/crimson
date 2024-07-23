@@ -1,0 +1,4 @@
+import{a as e}from"./emotion-react-jsx-runtime.browser.esm-B1TMS0DI.js";import{I as s}from"./IconButton-CzSHqdhr.js";import{I as m}from"./Icon-Bht7JVrg.js";import{d as p}from"./index-ZK6mf6hW.js";import"./index-BwDkhjyp.js";import"./_commonjsHelpers-BosuxZz1.js";import"./extends-CF3RwP-h.js";import"./emotion-styled-base.browser.esm-Dp_FgEmo.js";import"./constants-IjE9pQe9.js";import"./types-FAVVMtnh.js";import"./index-D3ylJrlI.js";const B={title:"Design System/IconButton",component:s,parameters:{layout:"centered"},tags:["autodocs"],argTypes:{}};function i(n){return e(s,{...n,children:e(m,{icon:p})})}const r={args:{},render:i};var t,o,a;r.parameters={...r.parameters,docs:{...(t=r.parameters)==null?void 0:t.docs,source:{originalSource:`{
+  args: {},
+  render: DefaultRender
+}`,...(a=(o=r.parameters)==null?void 0:o.docs)==null?void 0:a.source}}};const R=["Default"];export{r as Default,R as __namedExportsOrder,B as default};
